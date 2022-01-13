@@ -227,6 +227,17 @@ paths:
         type: aws_proxy
       x-amazon-apigateway-cors:
           allowOrigins: ["*"]
+  /auth:
+    get:
+      summary: "LINEログイン"
+      responses:
+        302:
+          description: "成功時のレスポンス"
+          headers:
+            Location:
+              type: "string"
+              description: "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${channelId}&redirect_uri=${redirectUri}&state=${stateHash}&scope=openid%20email%20profile&nonce=${nonceHash}"
+
 
 definitions:
   food:
