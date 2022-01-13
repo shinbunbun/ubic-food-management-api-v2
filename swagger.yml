@@ -1,0 +1,169 @@
+swagger: "2.0"
+info:
+  description: "UBIC食料管理システムAPI"
+  version: "1.0.0"
+  title: "UBIC food management API"
+paths:
+
+  /user:
+    get:
+      summary: "ユーザー情報API"
+      description: "ユーザーの情報を返します"
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              userId:
+                type: "string"
+              name:
+                type: "string"
+              transactions:
+                type: "array"
+                items:
+                  $ref: "#definitions/transaction" 
+
+  # /transactions:
+  #   get:
+  #     summary: "全取引情報API"
+  #     description: "すべての取引の情報を返します"
+  #     responses:
+  #       200:
+  #         description: "成功時のレスポンス"
+  #         schema:
+  #           type: "array"
+  #           items:
+  #             $ref: "#definitions/transaction"
+
+  /transaction/{transactionId}:
+  #   get:
+  #     summary: "取引情報API"
+  #     description: "指定された取引の情報を返します"
+  #     parameters:
+  #     - name: "transactionId"
+  #       in: "path"
+  #       description: "取得したい取引のID"
+  #       required: true
+  #       type: "string"
+  #     responses:
+  #       200:
+  #         description: "成功時のレスポンス"
+  #         schema:
+  #           $ref: "#definitions/transaction"
+    delete:
+      summary: "取引削除API（返却）"
+      description: "指定の取引を削除するAPI\n主に返却の際に使用する"
+      parameters:
+      - name: "transactionId"
+        in: "path"
+        description: "削除したい取引のID"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "成功時のレスポンス"
+
+  /transaction:
+    post:
+      summary: "取引追加API（貸し出し）"
+      description: "新たな取引を追加するAPI\n主に貸し出し時に使用する"
+      parameters:
+      - name: "body"
+        in: "body"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            foodId:
+              type: "string"
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            $ref: "#definitions/transaction"
+
+  /foods:
+    get:
+      summary: "食料情報取得API"
+      description: "すべての食料の情報を取得するAPI"
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "array"
+            items:
+              $ref: "#definitions/food"
+  
+  /food:
+    post:
+      summary: "食料追加API"
+      description: "食料を追加する時に使うAPI"
+      parameters:
+      - name: "body"
+        in: "body"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+            maker:
+              type: "string"
+            imageUrl:
+              type: "string"
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            $ref: "#definitions/food"
+  # /food/{foodId}:
+  #   post
+  /image:
+    post:
+      summary: "画像アップロードAPI"
+      consumes:
+        - image/jpeg
+      parameters:
+      - name: "image"
+        in: "body"
+        schema:
+          type: "string"
+          format: "binary"
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            type: "object"
+            properties:
+              imageUrl:
+                type: "string"
+
+definitions:
+  food:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      imageUrl:
+        type: "string"
+      maker:
+        type: "string"
+      name:
+        type: "string"
+      stock:
+        type: "integer"
+  transaction:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      date:
+        type: "string"
+      food:
+        $ref: "#definitions/food"
+
+      
+                  
+  #/food/{petId}:
+  #/transaction/{petId}:
