@@ -1,0 +1,5 @@
+package foods
+
+func FoodsGet() {
+
+}
