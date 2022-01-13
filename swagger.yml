@@ -23,6 +23,16 @@ paths:
                 type: "array"
                 items:
                   $ref: "#definitions/transaction" 
+      x-amazon-apigateway-integration:
+        credentials:
+          Fn::Sub: ${ApiRole.Arn}
+        uri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+        passthroughBehavior: when_no_templates
+        httpMethod: GET
+        type: aws_proxy
+      x-amazon-apigateway-cors:
+          allowOrigins: ["*"]
 
   # /transactions:
   #   get:
@@ -63,6 +73,16 @@ paths:
       responses:
         204:
           description: "成功時のレスポンス"
+      x-amazon-apigateway-integration:
+        credentials:
+          Fn::Sub: ${ApiRole.Arn}
+        uri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+        passthroughBehavior: when_no_templates
+        httpMethod: DELETE
+        type: aws_proxy
+      x-amazon-apigateway-cors:
+          allowOrigins: ["*"]
 
   /transaction:
     post:
@@ -82,6 +102,16 @@ paths:
           description: "成功時のレスポンス"
           schema:
             $ref: "#definitions/transaction"
+      x-amazon-apigateway-integration:
+        credentials:
+          Fn::Sub: ${ApiRole.Arn}
+        uri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+        passthroughBehavior: when_no_templates
+        httpMethod: POST
+        type: aws_proxy
+      x-amazon-apigateway-cors:
+          allowOrigins: ["*"]
 
   /foods:
     get:
@@ -94,6 +124,16 @@ paths:
             type: "array"
             items:
               $ref: "#definitions/food"
+      x-amazon-apigateway-integration:
+        credentials:
+          Fn::Sub: ${ApiRole.Arn}
+        uri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+        passthroughBehavior: when_no_templates
+        httpMethod: GET
+        type: aws_proxy
+      x-amazon-apigateway-cors:
+          allowOrigins: ["*"]
   
   /food:
     post:
@@ -117,6 +157,17 @@ paths:
           description: "成功時のレスポンス"
           schema:
             $ref: "#definitions/food"
+      x-amazon-apigateway-integration:
+        credentials:
+          Fn::Sub: ${ApiRole.Arn}
+        uri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+        passthroughBehavior: when_no_templates
+        httpMethod: POST
+        type: aws_proxy
+      x-amazon-apigateway-cors:
+          allowOrigins: ["*"]
+
   /food/{foodId}:
     patch:
       summary: "食料情報更新API"
@@ -135,6 +186,16 @@ paths:
           description: "成功時のレスポンス"
           schema:
             $ref: "#definitions/food"
+      x-amazon-apigateway-integration:
+        credentials:
+          Fn::Sub: ${ApiRole.Arn}
+        uri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+        passthroughBehavior: when_no_templates
+        httpMethod: PATCH
+        type: aws_proxy
+      x-amazon-apigateway-cors:
+          allowOrigins: ["*"]
 
 
   /image:
@@ -156,6 +217,16 @@ paths:
             properties:
               imageUrl:
                 type: "string"
+      x-amazon-apigateway-integration:
+        credentials:
+          Fn::Sub: ${ApiRole.Arn}
+        uri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+        passthroughBehavior: when_no_templates
+        httpMethod: POST
+        type: aws_proxy
+      x-amazon-apigateway-cors:
+          allowOrigins: ["*"]
 
 definitions:
   food:
