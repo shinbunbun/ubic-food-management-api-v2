@@ -117,8 +117,26 @@ paths:
           description: "成功時のレスポンス"
           schema:
             $ref: "#definitions/food"
-  # /food/{foodId}:
-  #   post
+  /food/{foodId}:
+    patch:
+      summary: "食料情報更新API"
+      description: "在庫数変更に使用します"
+      parameters:
+      - name: "body"
+        in: "body"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            addNum:
+              type: "integer"
+      responses:
+        200:
+          description: "成功時のレスポンス"
+          schema:
+            $ref: "#definitions/food"
+
+
   /image:
     post:
       summary: "画像アップロードAPI"
