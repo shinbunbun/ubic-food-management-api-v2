@@ -1,11 +1,11 @@
 package router
 
 import (
-	"hello-world/food"
-	"hello-world/foods"
-	"hello-world/image"
-	"hello-world/transaction"
-	"hello-world/user"
+	"hello-world/resources/food"
+	"hello-world/resources/foods"
+	"hello-world/resources/image"
+	"hello-world/resources/transaction"
+	"hello-world/resources/user"
 
 	"github.com/aws/aws-lambda-go/events"
 )
