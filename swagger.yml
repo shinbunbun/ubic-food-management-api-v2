@@ -237,6 +237,22 @@ paths:
             Location:
               type: "string"
               description: "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${channelId}&redirect_uri=${redirectUri}&state=${stateHash}&scope=openid%20email%20profile&nonce=${nonceHash}"
+  /callback:
+    get:
+      summary: "LINEログインのコールバックエンドポイント"
+      description: "Authentication Requestのコールバックエンドポイント"
+      parameters:
+      - name: query
+        in: "query"
+        type: "array"
+        items:
+          type: "string"
+          enum:
+            - "code"
+            - "state"
+      responses:
+        302:
+          description: "成功時のレスポンス"
 
 
 definitions:
