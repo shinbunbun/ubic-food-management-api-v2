@@ -1,18 +1,13 @@
 package main
 
 import (
-	"errors"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-
 	"hello-world/router"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
-var (
+/* var (
 	// DefaultHTTPGetAddress Default Address
 	DefaultHTTPGetAddress = "https://checkip.amazonaws.com"
 
@@ -21,13 +16,13 @@ var (
 
 	// ErrNon200Response non 200 status code in response
 	ErrNon200Response = errors.New("Non 200 Response found")
-)
+) */
 
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
-	router.Router(request)
+	return router.Router(request)
 
-	resp, err := http.Get(DefaultHTTPGetAddress)
+	/* resp, err := http.Get(DefaultHTTPGetAddress)
 	if err != nil {
 		return events.APIGatewayProxyResponse{}, err
 	}
@@ -48,7 +43,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	return events.APIGatewayProxyResponse{
 		Body:       fmt.Sprintf("Hello, %v", string(ip)),
 		StatusCode: 200,
-	}, nil
+	}, nil */
 }
 
 func main() {
