@@ -9,6 +9,10 @@ Description: >
 Globals:
   Function:
     Timeout: 5
+    Environment:
+      Variables:
+        STAGE: prod
+        CHANNEL_ID: dummy
 
 Resources:
   HelloWorldFunction:
