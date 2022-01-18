@@ -20,10 +20,5 @@ func AuthGet(request events.APIGatewayProxyRequest) events.APIGatewayProxyRespon
 		return response.StatusCode500(err)
 	}
 	url := "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=" + channelId + "&redirect_uri=" + redirectUri + "&state=" + stateHash + "&scope=openid profile&nonce=" + nonceHash
-	return events.APIGatewayProxyResponse{
-		StatusCode: 302,
-		Headers: map[string]string{
-			"Location": url,
-		},
-	}
+	return response.StatusCode302(url)
 }

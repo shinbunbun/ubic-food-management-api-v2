@@ -8,3 +8,12 @@ func StatusCode500(err error) events.APIGatewayProxyResponse {
 		Body:       "Internal Server Error: " + err.Error(),
 	}
 }
+
+func StatusCode302(url string) events.APIGatewayProxyResponse {
+	return events.APIGatewayProxyResponse{
+		StatusCode: 302,
+		Headers: map[string]string{
+			"Location": url,
+		},
+	}
+}
