@@ -15,3 +15,4 @@
 # vendor/
 
 .aws-sam
+env.json
