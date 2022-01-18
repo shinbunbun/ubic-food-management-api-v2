@@ -1,8 +1,8 @@
 package auth
 
 import (
+	"hello-world/config"
 	"hello-world/random"
-	"hello-world/resources/config"
 	"hello-world/response"
 
 	"github.com/aws/aws-lambda-go/events"
