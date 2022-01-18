@@ -237,6 +237,14 @@ paths:
             Location:
               type: "string"
               description: "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${channelId}&redirect_uri=${redirectUri}&state=${stateHash}&scope=openid%20email%20profile&nonce=${nonceHash}"
+      x-amazon-apigateway-integration:
+        credentials:
+          Fn::Sub: ${ApiRole.Arn}
+        uri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+        passthroughBehavior: when_no_templates
+        httpMethod: GET
+        type: aws_proxy
   /callback:
     get:
       summary: "LINEログインのコールバックエンドポイント"
@@ -253,6 +261,14 @@ paths:
       responses:
         302:
           description: "成功時のレスポンス"
+      x-amazon-apigateway-integration:
+        credentials:
+          Fn::Sub: ${ApiRole.Arn}
+        uri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+        passthroughBehavior: when_no_templates
+        httpMethod: GET
+        type: aws_proxy
 
 
 definitions:
