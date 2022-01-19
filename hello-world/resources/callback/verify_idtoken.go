@@ -11,40 +11,40 @@ import (
 	"time"
 )
 
-func verifyIdToken(requestCookie []string, idToken string) error {
+func verifyIdToken(requestCookie []string, idToken string) (payload, error) {
 	idTokenArr := strings.Split(".", idToken)
 
 	err := verifySignature(idTokenArr)
 	if err != nil {
-		return err
+		return payload{}, err
 	}
 
 	idTokenPayload, err := getIdTokenPayload(idTokenArr)
 	if err != nil {
-		return err
+		return payload{}, err
 	}
 
 	err = verifyIssuer(idTokenPayload)
 	if err != nil {
-		return err
+		return payload{}, err
 	}
 
 	err = verifyAud(idTokenPayload)
 	if err != nil {
-		return err
+		return payload{}, err
 	}
 
 	err = verifyExp(idTokenPayload)
 	if err != nil {
-		return err
+		return payload{}, err
 	}
 
 	err = verifyNonce(requestCookie, idTokenPayload)
 	if err != nil {
-		return err
+		return payload{}, err
 	}
 
-	return nil
+	return idTokenPayload, nil
 }
 
 func verifySignature(idTokenArr []string) error {
