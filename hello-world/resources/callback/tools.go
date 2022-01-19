@@ -9,6 +9,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -51,7 +52,7 @@ func getAccessToken(code string) (tokenResponse, error) {
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
-		return tokenResponse{}, errors.New("Error status code " + string(resp.StatusCode) + ": " + resp.Status)
+		return tokenResponse{}, errors.New("Error status code " + strconv.Itoa(resp.StatusCode) + ": " + resp.Status)
 	}
 
 	resBody, err := io.ReadAll(resp.Body)
@@ -60,6 +61,9 @@ func getAccessToken(code string) (tokenResponse, error) {
 	}
 
 	var resBodyStruct tokenResponse
-	json.Unmarshal(resBody, &resBodyStruct)
+	err = json.Unmarshal(resBody, &resBodyStruct)
+	if err != nil {
+		return tokenResponse{}, err
+	}
 	return resBodyStruct, nil
 }
