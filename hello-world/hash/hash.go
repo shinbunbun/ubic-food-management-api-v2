@@ -15,9 +15,13 @@ func CreateSha3_256Hash(val string) string {
 	return hex.EncodeToString(hash.Sum(nil))
 }
 
-func CreateSha256HMAC(msg string) string {
+func CreateSha256HMAC(msg string) []byte {
 	key := config.GetEnv("CHANNEL_SECRET")
 	mac := hmac.New(sha256.New, []byte(key))
 	mac.Write([]byte(msg))
-	return hex.EncodeToString(mac.Sum(nil))
+	return mac.Sum(nil)
+}
+
+func CreateSHA256HMACString(hmac []byte) string {
+	return hex.EncodeToString(hmac)
 }
