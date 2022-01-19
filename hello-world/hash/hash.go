@@ -12,7 +12,7 @@ import (
 func CreateSha3_256Hash(val string) string {
 	hash := sha3.New256()
 	hash.Write([]byte(val))
-	return string(hash.Sum(nil))
+	return hex.EncodeToString(hash.Sum(nil))
 }
 
 func CreateSha256HMAC(msg string) string {
