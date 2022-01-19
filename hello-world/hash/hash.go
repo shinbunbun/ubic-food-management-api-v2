@@ -21,7 +21,3 @@ func CreateSha256HMAC(msg string) []byte {
 	mac.Write([]byte(msg))
 	return mac.Sum(nil)
 }
-
-func CreateSHA256HMACString(hmac []byte) string {
-	return hex.EncodeToString(hmac)
-}
