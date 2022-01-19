@@ -12,7 +12,7 @@ import (
 )
 
 func verifyIdToken(requestCookie []string, idToken string) (payload, error) {
-	idTokenArr := strings.Split(".", idToken)
+	idTokenArr := strings.Split(idToken, ".")
 
 	err := verifySignature(idTokenArr)
 	if err != nil {
@@ -50,7 +50,7 @@ func verifyIdToken(requestCookie []string, idToken string) (payload, error) {
 func verifySignature(idTokenArr []string) error {
 	validSignatureTarget := idTokenArr[0] + "." + idTokenArr[1]
 	signature := idTokenArr[2]
-	hmac := hash.CreateSha256HMAC(validSignatureTarget)
+	hmac := base64.URLEncoding.EncodeToString(hash.CreateSha256HMAC(validSignatureTarget))
 	if signature != hmac {
 		return errors.New("Signature is not valid")
 	}
