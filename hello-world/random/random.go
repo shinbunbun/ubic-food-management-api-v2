@@ -2,7 +2,7 @@ package random
 
 import (
 	"crypto/rand"
-	"encoding/base64"
+	"encoding/hex"
 )
 
 func GenerateRandomBytes(n int) ([]byte, error) {
@@ -18,5 +18,5 @@ func GenerateRandomBytes(n int) ([]byte, error) {
 
 func GenerateRandomString(s int) (string, error) {
 	b, err := GenerateRandomBytes(s)
-	return base64.URLEncoding.EncodeToString(b), err
+	return hex.EncodeToString(b), err
 }
