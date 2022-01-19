@@ -30,8 +30,8 @@ func AuthGet(request events.APIGatewayProxyRequest) events.APIGatewayProxyRespon
 		},
 		MultiValueHeaders: map[string][]string{
 			"Set-Cookie": {
-				"nonce=" + nonce,
-				"state=" + state,
+				"nonce=" + nonce + "; HttpOnly;",
+				"state=" + state + "; HttpOnly;",
 			},
 		},
 	}
