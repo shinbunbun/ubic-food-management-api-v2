@@ -37,6 +37,9 @@ func CallbackGet(request events.APIGatewayProxyRequest) events.APIGatewayProxyRe
 	}
 
 	body, err := json.Marshal(idTokenPayload)
+	if err != nil {
+		return response.StatusCode500(err)
+	}
 
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
