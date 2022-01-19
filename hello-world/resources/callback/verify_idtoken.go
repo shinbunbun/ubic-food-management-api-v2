@@ -5,11 +5,13 @@ import (
 	"encoding/json"
 	"errors"
 	"hello-world/config"
+	"hello-world/cookie"
 	"hello-world/hash"
 	"strings"
+	"time"
 )
 
-func verifyIdToken(idToken string) error {
+func verifyIdToken(requestCookie []string, idToken string) error {
 	idTokenArr := strings.Split(".", idToken)
 
 	err := verifySignature(idTokenArr)
@@ -28,6 +30,16 @@ func verifyIdToken(idToken string) error {
 	}
 
 	err = verifyAud(idTokenPayload)
+	if err != nil {
+		return err
+	}
+
+	err = verifyExp(idTokenPayload)
+	if err != nil {
+		return err
+	}
+
+	err = verifyNonce(requestCookie, idTokenPayload)
 	if err != nil {
 		return err
 	}
@@ -69,6 +81,25 @@ func verifyIssuer(idTokenPayload payload) error {
 func verifyAud(idTokenPayload payload) error {
 	if idTokenPayload.Aud != config.GetEnv("CHANNEL_ID") {
 		return errors.New("Aud is not valid")
+	}
+	return nil
+}
+
+func verifyExp(idTokenPayload payload) error {
+	if idTokenPayload.Exp < int(time.Now().Unix()) {
+		return errors.New("Token is expired")
+	}
+	return nil
+}
+
+func verifyNonce(requestCookie []string, idTokenPayload payload) error {
+	cookieNonce, err := cookie.GetCookieValue(requestCookie, "nonce")
+	if err != nil {
+		return err
+	}
+	cookieNonceHash := hash.CreateSha3_256Hash(cookieNonce)
+	if cookieNonceHash != idTokenPayload.Nonce {
+		return errors.New("State is not valid")
 	}
 	return nil
 }
