@@ -2,6 +2,7 @@ package router
 
 import (
 	"hello-world/resources/auth"
+	"hello-world/resources/callback"
 	"hello-world/resources/food"
 	"hello-world/resources/foods"
 	"hello-world/resources/image"
@@ -49,6 +50,11 @@ func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 		switch method {
 		case "GET":
 			response = auth.AuthGet(request)
+		}
+	case "/callback":
+		switch method {
+		case "GET":
+			response = callback.CallbackGet(request)
 		}
 	}
 	return response, nil
