@@ -51,13 +51,14 @@ func getAccessToken(code string) (tokenResponse, error) {
 		return tokenResponse{}, err
 	}
 	defer resp.Body.Close()
-	if resp.StatusCode != 200 {
-		return tokenResponse{}, errors.New("Error status code " + strconv.Itoa(resp.StatusCode) + ": " + resp.Status)
-	}
 
 	resBody, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return tokenResponse{}, err
+	}
+
+	if resp.StatusCode != 200 {
+		return tokenResponse{}, errors.New("Error status code " + strconv.Itoa(resp.StatusCode) + ": " + string(resBody))
 	}
 
 	var resBodyStruct tokenResponse
