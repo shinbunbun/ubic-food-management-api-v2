@@ -3,6 +3,7 @@ package callback
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"hello-world/response"
 	"strings"
 
@@ -13,6 +14,7 @@ func CallbackGet(request events.APIGatewayProxyRequest) events.APIGatewayProxyRe
 
 	query := request.QueryStringParameters
 	if val, ok := query["error"]; !ok {
+		fmt.Println("Query Error:", val)
 		return response.StatusCode400(errors.New(val))
 	}
 
@@ -20,6 +22,7 @@ func CallbackGet(request events.APIGatewayProxyRequest) events.APIGatewayProxyRe
 
 	err := checkState(query, requestCookie, request)
 	if err != nil {
+		fmt.Println("State Error:", err)
 		return response.StatusCode400(err)
 	}
 
@@ -27,17 +30,20 @@ func CallbackGet(request events.APIGatewayProxyRequest) events.APIGatewayProxyRe
 
 	tokenRes, err := getAccessToken(code)
 	if err != nil {
+		fmt.Println("Get Token Error:", err)
 		return response.StatusCode500(err)
 	}
 	idToken := tokenRes.IdToken
 
 	idTokenPayload, err := verifyIdToken(requestCookie, idToken)
 	if err != nil {
+		fmt.Println("Verify Token Error:", err)
 		return response.StatusCode500(err)
 	}
 
 	body, err := json.Marshal(idTokenPayload)
 	if err != nil {
+		fmt.Println("Create Body Error:", err)
 		return response.StatusCode500(err)
 	}
 
