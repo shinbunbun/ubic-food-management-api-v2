@@ -17,8 +17,8 @@ type payload struct {
 	Iat      int      `json:"iat"`
 	AuthTime int      `json:"auth_time"`
 	Nonce    string   `json:"nonce"`
-	Amr      []string `json:"amr",omitempty`
+	Amr      []string `json:"amr,omitempty"`
 	Name     string   `json:"name"`
 	Picture  string   `json:"picture"`
-	Email    string   `json:"email",omitempty`
+	Email    string   `json:"email,omitempty"`
 }
