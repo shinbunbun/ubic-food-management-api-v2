@@ -27,6 +27,11 @@ func verifyIdToken(idToken string) error {
 		return err
 	}
 
+	err = verifyAud(idTokenPayload)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
