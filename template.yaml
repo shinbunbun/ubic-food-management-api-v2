@@ -13,6 +13,7 @@ Globals:
       Variables:
         STAGE: prod
         CHANNEL_ID: dummy
+        CHANNEL_SECRET: dummy
 
 Resources:
   HelloWorldFunction:
