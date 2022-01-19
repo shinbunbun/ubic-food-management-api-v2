@@ -17,3 +17,10 @@ func StatusCode302(url string) events.APIGatewayProxyResponse {
 		},
 	}
 }
+
+func StatusCode400(err error) events.APIGatewayProxyResponse {
+	return events.APIGatewayProxyResponse{
+		StatusCode: 400,
+		Body:       "Bad Request: " + err.Error(),
+	}
+}
