@@ -2,6 +2,7 @@ package auth
 
 import (
 	"hello-world/config"
+	"hello-world/hash"
 	"hello-world/random"
 	"hello-world/response"
 
@@ -11,14 +12,27 @@ import (
 func AuthGet(request events.APIGatewayProxyRequest) events.APIGatewayProxyResponse {
 	channelId := config.GetEnv("CHANNEL_ID")
 	redirectUri := config.GetRedirectUri()
-	stateHash, err := random.GenerateRandomString(32)
+	state, err := random.GenerateRandomString(32)
 	if err != nil {
 		return response.StatusCode500(err)
 	}
-	nonceHash, err := random.GenerateRandomString(32)
+	stateHash := hash.CreateSha3_256Hash(state)
+	nonce, err := random.GenerateRandomString(32)
+	nonceHash := hash.CreateSha3_256Hash(nonce)
 	if err != nil {
 		return response.StatusCode500(err)
 	}
 	url := "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=" + channelId + "&redirect_uri=" + redirectUri + "&state=" + stateHash + "&scope=openid profile&nonce=" + nonceHash
-	return response.StatusCode302(url)
+	return events.APIGatewayProxyResponse{
+		StatusCode: 302,
+		Headers: map[string]string{
+			"Location": url,
+		},
+		MultiValueHeaders: map[string][]string{
+			"Set-Cookie": {
+				"nonce=" + nonce,
+				"state=" + state,
+			},
+		},
+	}
 }
