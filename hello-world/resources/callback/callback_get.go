@@ -2,7 +2,6 @@ package callback
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"hello-world/response"
 	"strings"
@@ -13,12 +12,8 @@ import (
 func CallbackGet(request events.APIGatewayProxyRequest) events.APIGatewayProxyResponse {
 
 	query := request.QueryStringParameters
-	if val, ok := query["error"]; !ok {
-		fmt.Println("Query Error:", val)
-		return response.StatusCode400(errors.New(val))
-	}
 
-	requestCookie := strings.Split(";", request.Headers["Cookie"])
+	requestCookie := strings.Split(request.Headers["Cookie"], "; ")
 
 	err := checkState(query, requestCookie, request)
 	if err != nil {
