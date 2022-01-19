@@ -10,7 +10,7 @@ import (
 
 func AuthGet(request events.APIGatewayProxyRequest) events.APIGatewayProxyResponse {
 	channelId := config.GetEnv("CHANNEL_ID")
-	redirectUri := config.GetRedirectUri(request)
+	redirectUri := config.GetRedirectUri()
 	stateHash, err := random.GenerateRandomString(32)
 	if err != nil {
 		return response.StatusCode500(err)
