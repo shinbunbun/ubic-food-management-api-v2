@@ -3,6 +3,7 @@ package callback
 import (
 	"fmt"
 	"hello-world/response"
+	"hello-world/token"
 	"strings"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -29,7 +30,7 @@ func CallbackGet(request events.APIGatewayProxyRequest) events.APIGatewayProxyRe
 	}
 	idToken := tokenRes.IdToken
 
-	_, err = verifyIdToken(requestCookie, idToken)
+	_, err = token.VerifyIdToken(requestCookie, idToken)
 	if err != nil {
 		fmt.Println("Verify Token Error:", err)
 		return response.StatusCode500(err)
