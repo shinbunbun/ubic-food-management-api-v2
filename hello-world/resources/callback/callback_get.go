@@ -1,7 +1,6 @@
 package callback
 
 import (
-	"encoding/json"
 	"fmt"
 	"hello-world/response"
 	"strings"
@@ -30,20 +29,20 @@ func CallbackGet(request events.APIGatewayProxyRequest) events.APIGatewayProxyRe
 	}
 	idToken := tokenRes.IdToken
 
-	idTokenPayload, err := verifyIdToken(requestCookie, idToken)
+	_, err = verifyIdToken(requestCookie, idToken)
 	if err != nil {
 		fmt.Println("Verify Token Error:", err)
 		return response.StatusCode500(err)
 	}
 
-	body, err := json.Marshal(idTokenPayload)
+	/* body, err := json.Marshal(idTokenPayload)
 	if err != nil {
 		fmt.Println("Create Body Error:", err)
 		return response.StatusCode500(err)
-	}
+	} */
 
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
-		Body:       string(body),
+		Body:       idToken,
 	}
 }
