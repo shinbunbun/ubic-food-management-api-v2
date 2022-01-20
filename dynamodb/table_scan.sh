@@ -1,0 +1,1 @@
+aws dynamodb scan --table-name UBIC-FOOD --profile local --endpoint-url http://localhost:8000
