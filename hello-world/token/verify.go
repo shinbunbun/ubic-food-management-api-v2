@@ -11,43 +11,43 @@ import (
 	"time"
 )
 
-func VerifyIdToken(requestCookie []string, idToken string) (payload, error) {
+func VerifyIdToken(requestCookie []string, idToken string) (Payload, error) {
 	idTokenArr := strings.Split(idToken, ".")
 
-	err := verifySignature(idTokenArr)
+	err := VerifySignature(idTokenArr)
 	if err != nil {
-		return payload{}, err
+		return Payload{}, err
 	}
 
-	idTokenPayload, err := getIdTokenPayload(idTokenArr)
+	idTokenPayload, err := GetIdTokenPayload(idTokenArr)
 	if err != nil {
-		return payload{}, err
+		return Payload{}, err
 	}
 
-	err = verifyIssuer(idTokenPayload)
+	err = VerifyIssuer(idTokenPayload)
 	if err != nil {
-		return payload{}, err
+		return Payload{}, err
 	}
 
-	err = verifyAud(idTokenPayload)
+	err = VerifyAud(idTokenPayload)
 	if err != nil {
-		return payload{}, err
+		return Payload{}, err
 	}
 
-	err = verifyExp(idTokenPayload)
+	err = VerifyExp(idTokenPayload)
 	if err != nil {
-		return payload{}, err
+		return Payload{}, err
 	}
 
-	err = verifyNonce(requestCookie, idTokenPayload)
+	err = VerifyNonce(requestCookie, idTokenPayload)
 	if err != nil {
-		return payload{}, err
+		return Payload{}, err
 	}
 
 	return idTokenPayload, nil
 }
 
-func verifySignature(idTokenArr []string) error {
+func VerifySignature(idTokenArr []string) error {
 	validSignatureTarget := idTokenArr[0] + "." + idTokenArr[1]
 	signature := idTokenArr[2]
 	hmac := base64.RawURLEncoding.EncodeToString(hash.CreateSha256HMAC(validSignatureTarget))
@@ -57,20 +57,20 @@ func verifySignature(idTokenArr []string) error {
 	return nil
 }
 
-func getIdTokenPayload(idTokenArr []string) (payload, error) {
+func GetIdTokenPayload(idTokenArr []string) (Payload, error) {
 	idTokenPayloadJson, err := base64.StdEncoding.DecodeString(idTokenArr[1])
 	if err != nil {
-		return payload{}, err
+		return Payload{}, err
 	}
-	var idTokenPayload payload
+	var idTokenPayload Payload
 	err = json.Unmarshal(idTokenPayloadJson, &idTokenPayload)
 	if err != nil {
-		return payload{}, err
+		return Payload{}, err
 	}
 	return idTokenPayload, nil
 }
 
-func verifyIssuer(idTokenPayload payload) error {
+func VerifyIssuer(idTokenPayload Payload) error {
 	issuer := "https://access.line.me"
 	if idTokenPayload.Iss != issuer {
 		return errors.New("Issuer is not valid")
@@ -78,21 +78,21 @@ func verifyIssuer(idTokenPayload payload) error {
 	return nil
 }
 
-func verifyAud(idTokenPayload payload) error {
+func VerifyAud(idTokenPayload Payload) error {
 	if idTokenPayload.Aud != config.GetEnv("CHANNEL_ID") {
 		return errors.New("Aud is not valid")
 	}
 	return nil
 }
 
-func verifyExp(idTokenPayload payload) error {
+func VerifyExp(idTokenPayload Payload) error {
 	if idTokenPayload.Exp < int(time.Now().Unix()) {
 		return errors.New("Token is expired")
 	}
 	return nil
 }
 
-func verifyNonce(requestCookie []string, idTokenPayload payload) error {
+func VerifyNonce(requestCookie []string, idTokenPayload Payload) error {
 	cookieNonce, err := cookie.GetCookieValue(requestCookie, "nonce")
 	if err != nil {
 		return err
