@@ -21,11 +21,13 @@ func CreateTable() {
 
 	dynamoDBRegion := "ap-north-east-1"
 
-	db := dynamo.New(session.Must(session.NewSession(&aws.Config{
+	ses := session.Must(session.NewSession())
+
+	db := dynamo.New(ses, &aws.Config{
 		Region:     aws.String(dynamoDBRegion),
 		Endpoint:   aws.String(dynamoDBEndpoint),
 		DisableSSL: aws.Bool(disableSsl),
-	})))
+	})
 
 	table = db.Table("UBIC-FOOD")
 }
@@ -44,12 +46,14 @@ func GetByIDDataType(id string, dataType string) (DynamoItem, error) {
 	return readResult, nil
 }
 
-func GetByDataDataType(Data string, dataType string) (DynamoItem, error) {
-	var readResult DynamoItem
-	err := table.Get("Data", Data).Range("DataType", dynamo.Equal, dataType).Index("Data-DataType-index").One(&readResult)
+func GetByDataDataType(Data string, dataType string) ([]DynamoItem, error) {
+	var readResult []DynamoItem
+	fmt.Printf("Table: %+v\n", table)
+	err := table.Get("Data", Data).Range("DataType", dynamo.Equal, dataType).Index("Data-DataType-index").All(&readResult)
+	fmt.Printf("readResult: %+v\n", readResult)
 	if err != nil {
 		fmt.Printf("Failed to get item[%v]\n", err)
-		return DynamoItem{}, err
+		return []DynamoItem{}, err
 	}
 	return readResult, nil
 }
