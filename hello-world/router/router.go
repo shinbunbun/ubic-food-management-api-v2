@@ -8,6 +8,7 @@ import (
 	"hello-world/resources/image"
 	"hello-world/resources/transaction"
 	"hello-world/resources/user"
+	"hello-world/token"
 
 	"github.com/aws/aws-lambda-go/events"
 )
@@ -15,12 +16,28 @@ import (
 func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	path := request.Path
 	method := request.HTTPMethod
-	var response events.APIGatewayProxyResponse
+	response := events.APIGatewayProxyResponse{
+		StatusCode: 500,
+		Body:       "No response",
+	}
+
+	var idTokenPayload token.Payload
+	var err error
+	if !(path == "/auth" || path == "/callback") {
+		idTokenPayload, err = authorizer(request)
+		if err != nil {
+			return events.APIGatewayProxyResponse{
+				StatusCode: 401,
+				Body:       err.Error(),
+			}, nil
+		}
+	}
+
 	switch path {
 	case "/user":
 		switch method {
 		case "GET":
-			/* response =  */ user.UserGet()
+			response = user.UserGet(request, idTokenPayload)
 		}
 	case "/transaction":
 		switch method {
