@@ -24,3 +24,10 @@ func StatusCode400(err error) events.APIGatewayProxyResponse {
 		Body:       "Bad Request: " + err.Error(),
 	}
 }
+
+func StatusCode200(body string) events.APIGatewayProxyResponse {
+	return events.APIGatewayProxyResponse{
+		StatusCode: 200,
+		Body:       body,
+	}
+}
