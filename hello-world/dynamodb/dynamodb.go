@@ -6,6 +6,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/google/uuid"
 	"github.com/guregu/dynamo"
 )
 
@@ -78,4 +79,13 @@ func BatchDelete(keys []dynamo.Keyed) error {
 		return fmt.Errorf("Failed to delete %d items", len(keys))
 	}
 	return err
+}
+
+func GenerateID() (string, error) {
+	u, err := uuid.NewRandom()
+	if err != nil {
+		fmt.Println(err)
+		return "", err
+	}
+	return u.String(), nil
 }
