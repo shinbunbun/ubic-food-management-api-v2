@@ -6,6 +6,7 @@ import (
 	"hello-world/response"
 	"hello-world/token"
 	"hello-world/types"
+	"strconv"
 
 	"github.com/aws/aws-lambda-go/events"
 )
@@ -32,7 +33,10 @@ func UserGet(request events.APIGatewayProxyRequest, idTokenPayload token.Payload
 		if err != nil {
 			return response.StatusCode500(err)
 		}
-		transaction.Date = transactionDateCol.Data
+		transaction.Date, err = strconv.Atoi(transactionDateCol.Data)
+		if err != nil {
+			return response.StatusCode500(err)
+		}
 
 		foodIDCol, err := dynamodb.GetByIDDataType(transaction.ID, "transaction-food")
 		if err != nil {
