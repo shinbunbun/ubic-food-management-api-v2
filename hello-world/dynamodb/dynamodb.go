@@ -67,3 +67,7 @@ func GetByDataKind(dataKind string) (DynamoItem, error) {
 	}
 	return readResult, nil
 }
+
+func Delete(id string) error {
+	return table.Delete("ID", id).Run()
+}
