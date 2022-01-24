@@ -296,7 +296,7 @@ definitions:
       id:
         type: "string"
       date:
-        type: "string"
+        type: "integer"
       food:
         $ref: "#/definitions/food"
 
