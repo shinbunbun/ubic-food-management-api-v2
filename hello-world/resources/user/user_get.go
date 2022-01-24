@@ -2,7 +2,6 @@ package user
 
 import (
 	"encoding/json"
-	"fmt"
 	"hello-world/dynamodb"
 	"hello-world/response"
 	"hello-world/token"
@@ -23,7 +22,6 @@ func UserGet(request events.APIGatewayProxyRequest, idTokenPayload token.Payload
 	if err != nil {
 		return response.StatusCode500(err)
 	}
-	fmt.Printf("transactionUserCols: %+v\n", transactionUserCols)
 
 	for _, v := range transactionUserCols {
 		transaction := Transaction{}
