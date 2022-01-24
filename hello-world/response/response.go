@@ -31,3 +31,9 @@ func StatusCode200(body string) events.APIGatewayProxyResponse {
 		Body:       body,
 	}
 }
+
+func StatusCode204() events.APIGatewayProxyResponse {
+	return events.APIGatewayProxyResponse{
+		StatusCode: 204,
+	}
+}
