@@ -68,8 +68,8 @@ func GetByDataKind(dataKind string) (DynamoItem, error) {
 	return readResult, nil
 }
 
-func DeleteByID(id string) error {
-	return table.Delete("ID", id).Range("DataType", "transaction-date").Run()
+func DeleteByID(id string, dataType string) error {
+	return table.Delete("ID", id).Range("DataType", dataType).Run()
 }
 
 func BatchDelete(keys dynamo.Keys) error {
