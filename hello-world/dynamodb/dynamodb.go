@@ -81,6 +81,16 @@ func BatchDelete(keys []dynamo.Keyed) error {
 	return err
 }
 
+func GetByID(id string) (DynamoItem, error) {
+	var readResult DynamoItem
+	err := table.Get("ID", id).One(&readResult)
+	if err != nil {
+		fmt.Printf("Failed to get item[%v]\n", err)
+		return DynamoItem{}, err
+	}
+	return readResult, nil
+}
+
 func GenerateID() (string, error) {
 	u, err := uuid.NewRandom()
 	if err != nil {
