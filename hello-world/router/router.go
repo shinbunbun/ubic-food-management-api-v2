@@ -14,7 +14,7 @@ import (
 )
 
 func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	path := request.Path
+	resource := request.Resource
 	method := request.HTTPMethod
 	response := events.APIGatewayProxyResponse{
 		StatusCode: 500,
@@ -23,7 +23,7 @@ func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 
 	var idTokenPayload token.Payload
 	var err error
-	if !(path == "/auth" || path == "/callback") {
+	if !(resource == "/auth" || resource == "/callback") {
 		idTokenPayload, err = authorizer(request)
 		if err != nil {
 			return events.APIGatewayProxyResponse{
@@ -33,16 +33,19 @@ func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 		}
 	}
 
-	switch path {
+	switch resource {
 	case "/user":
 		switch method {
 		case "GET":
 			response = user.UserGet(request, idTokenPayload)
 		}
-	case "/transaction":
+	case "/transaction/{transactionId}":
 		switch method {
 		case "DELETE":
-			/* response =  */ transaction.TransactionDelete()
+			response = transaction.TransactionDelete(request, idTokenPayload)
+		}
+	case "/transaction":
+		switch method {
 		case "POST":
 			transaction.TransactionPost()
 		}
