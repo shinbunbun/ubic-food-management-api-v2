@@ -5,13 +5,14 @@ import (
 	"hello-world/dynamodb"
 	"hello-world/response"
 	"hello-world/token"
+	"hello-world/types"
 
 	"github.com/aws/aws-lambda-go/events"
 )
 
 func UserGet(request events.APIGatewayProxyRequest, idTokenPayload token.Payload) events.APIGatewayProxyResponse {
 
-	var userData User
+	var userData types.User
 
 	userData.UserID = idTokenPayload.Sub
 	userData.Name = idTokenPayload.Name
@@ -24,7 +25,7 @@ func UserGet(request events.APIGatewayProxyRequest, idTokenPayload token.Payload
 	}
 
 	for _, v := range transactionUserCols {
-		transaction := Transaction{}
+		transaction := types.Transaction{}
 		transaction.ID = v.ID
 
 		transactionDateCol, err := dynamodb.GetByIDDataType(transaction.ID, "transaction-date")
@@ -56,31 +57,31 @@ func UserGet(request events.APIGatewayProxyRequest, idTokenPayload token.Payload
 	return response.StatusCode200(string(resBody))
 }
 
-func getFoodDataByID(foodId string) (Food, error) {
-	foodData := Food{}
+func getFoodDataByID(foodId string) (types.Food, error) {
+	foodData := types.Food{}
 	foodData.ID = foodId
 
 	foodNameCol, err := dynamodb.GetByIDDataType(foodData.ID, "food-name")
 	if err != nil {
-		return Food{}, err
+		return types.Food{}, err
 	}
 	foodData.Name = foodNameCol.Data
 
 	foodMakerCol, err := dynamodb.GetByIDDataType(foodData.ID, "food-maker")
 	if err != nil {
-		return Food{}, err
+		return types.Food{}, err
 	}
 	foodData.Maker = foodMakerCol.Data
 
 	foodImageCol, err := dynamodb.GetByIDDataType(foodData.ID, "food-image")
 	if err != nil {
-		return Food{}, err
+		return types.Food{}, err
 	}
 	foodData.ImageUrl = foodImageCol.Data
 
 	foodStockCol, err := dynamodb.GetByIDDataType(foodData.ID, "food-stock")
 	if err != nil {
-		return Food{}, err
+		return types.Food{}, err
 	}
 	foodData.Stock = foodStockCol.IntData
 
