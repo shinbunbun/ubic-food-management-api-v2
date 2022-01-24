@@ -22,7 +22,7 @@ paths:
               transactions:
                 type: "array"
                 items:
-                  $ref: "#definitions/transaction" 
+                  $ref: "#/definitions/transaction" 
       x-amazon-apigateway-integration:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
@@ -101,7 +101,7 @@ paths:
         200:
           description: "成功時のレスポンス"
           schema:
-            $ref: "#definitions/transaction"
+            $ref: "#/definitions/transaction"
       x-amazon-apigateway-integration:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
@@ -123,7 +123,7 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#definitions/food"
+              $ref: "#/definitions/food"
       x-amazon-apigateway-integration:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
@@ -156,7 +156,7 @@ paths:
         200:
           description: "成功時のレスポンス"
           schema:
-            $ref: "#definitions/food"
+            $ref: "#/definitions/food"
       x-amazon-apigateway-integration:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
@@ -173,6 +173,11 @@ paths:
       summary: "食料情報更新API"
       description: "在庫数変更に使用します"
       parameters:
+      - name: "foodId"
+        in: "path"
+        description: "更新したい食料のID"
+        required: true
+        type: "string"
       - name: "body"
         in: "body"
         required: true
@@ -185,7 +190,7 @@ paths:
         200:
           description: "成功時のレスポンス"
           schema:
-            $ref: "#definitions/food"
+            $ref: "#/definitions/food"
       x-amazon-apigateway-integration:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
@@ -293,7 +298,7 @@ definitions:
       date:
         type: "string"
       food:
-        $ref: "#definitions/food"
+        $ref: "#/definitions/food"
 
       
                   
