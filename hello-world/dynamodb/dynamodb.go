@@ -72,8 +72,8 @@ func DeleteByID(id string, dataType string) error {
 	return table.Delete("ID", id).Range("DataType", dataType).Run()
 }
 
-func BatchDelete(keys dynamo.Keys) error {
-	wrote, err := table.Batch("ID", "DataType").Write().Delete(keys).Run()
+func BatchDelete(keys []dynamo.Keyed) error {
+	wrote, err := table.Batch("ID", "DataType").Write().Delete(keys...).Run()
 	if wrote != len(keys) {
 		return fmt.Errorf("Failed to delete %d items", len(keys))
 	}
