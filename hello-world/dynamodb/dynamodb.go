@@ -68,6 +68,14 @@ func GetByDataKind(dataKind string) (DynamoItem, error) {
 	return readResult, nil
 }
 
-func Delete(id string) error {
-	return table.Delete("ID", id).Run()
+func DeleteByID(id string) error {
+	return table.Delete("ID", id).Range("DataType", "transaction-date").Run()
+}
+
+func BatchDelete(keys dynamo.Keys) error {
+	wrote, err := table.Batch("ID", "DataType").Write().Delete(keys).Run()
+	if wrote != len(keys) {
+		return fmt.Errorf("Failed to delete %d items", len(keys))
+	}
+	return err
 }
