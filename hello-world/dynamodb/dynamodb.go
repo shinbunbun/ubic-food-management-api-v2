@@ -99,6 +99,10 @@ func GetByID(id string) ([]DynamoItem, error) {
 	return readResult, nil
 }
 
+func AddIntData(count int, id string, dataType string) error {
+	return table.Update("ID", id).Range("DataType", dataType).Add("IntData", count).Run()
+}
+
 func GenerateID() (string, error) {
 	u, err := uuid.NewRandom()
 	if err != nil {
