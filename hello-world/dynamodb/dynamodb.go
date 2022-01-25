@@ -59,12 +59,12 @@ func GetByDataDataType(Data string, dataType string) ([]DynamoItem, error) {
 	return readResult, nil
 }
 
-func GetByDataKind(dataKind string) (DynamoItem, error) {
-	var readResult DynamoItem
-	err := table.Get("DataKind", dataKind).Index("DataKind-index").One(&readResult)
+func GetByDataKind(dataKind string) ([]DynamoItem, error) {
+	var readResult []DynamoItem
+	err := table.Get("DataKind", dataKind).Index("DataKind-index").All(&readResult)
 	if err != nil {
 		fmt.Printf("Failed to get item[%v]\n", err)
-		return DynamoItem{}, err
+		return []DynamoItem{}, err
 	}
 	return readResult, nil
 }
