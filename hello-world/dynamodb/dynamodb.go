@@ -82,9 +82,15 @@ func BatchDelete(keys []dynamo.Keyed) error {
 }
 
 func BatchPut(items []DynamoItem) error {
-	wrote, err := table.Batch().Write().Put(items).Run()
+
+	items2 := make([]interface{}, len(items))
+	for i, v := range items {
+		items2[i] = v
+	}
+
+	wrote, err := table.Batch().Write().Put(items2...).Run()
 	if wrote != len(items) {
-		return fmt.Errorf("Failed to put %d items", len(items))
+		return fmt.Errorf("unexpected wrote: %d ≠ %d", wrote, len(items))
 	}
 	return err
 }
