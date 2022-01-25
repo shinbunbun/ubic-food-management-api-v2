@@ -52,7 +52,7 @@ func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 	case "/foods":
 		switch method {
 		case "GET":
-			foods.FoodsGet()
+			response = foods.FoodsGet(request, idTokenPayload)
 		}
 	case "/food":
 		switch method {
