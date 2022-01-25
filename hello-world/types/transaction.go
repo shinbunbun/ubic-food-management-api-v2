@@ -29,6 +29,7 @@ func (t *Transaction) Put(userId string) error {
 			ID:       t.ID,
 			DataType: "transaction-user",
 			Data:     userId,
+			DataKind: "transaction",
 		},
 	}
 	return dynamodb.BatchPut(items)
