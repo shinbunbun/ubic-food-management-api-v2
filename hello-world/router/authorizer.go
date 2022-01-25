@@ -1,6 +1,7 @@
 package router
 
 import (
+	"errors"
 	"strings"
 
 	"hello-world/token"
@@ -9,7 +10,11 @@ import (
 )
 
 func authorizer(request events.APIGatewayProxyRequest) (token.Payload, error) {
-	idToken := strings.Split(request.Headers["Authorization"], "Bearer ")[1]
+	authZHeader := request.Headers["Authorization"]
+	if authZHeader == "" {
+		return token.Payload{}, errors.New("Authorization header is empty")
+	}
+	idToken := strings.Split(authZHeader, "Bearer ")[1]
 	idTokenArr := strings.Split(idToken, ".")
 	err := token.VerifySignature(idTokenArr)
 	if err != nil {
