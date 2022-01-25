@@ -81,6 +81,14 @@ func BatchDelete(keys []dynamo.Keyed) error {
 	return err
 }
 
+func BatchPut(items []DynamoItem) error {
+	wrote, err := table.Batch().Write().Put(items).Run()
+	if wrote != len(items) {
+		return fmt.Errorf("Failed to put %d items", len(items))
+	}
+	return err
+}
+
 func GetByID(id string) ([]DynamoItem, error) {
 	var readResult []DynamoItem
 	err := table.Get("ID", id).All(&readResult)
