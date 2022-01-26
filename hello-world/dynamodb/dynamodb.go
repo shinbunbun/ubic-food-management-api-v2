@@ -14,13 +14,13 @@ var table dynamo.Table
 
 func CreateTable() {
 	disableSsl := false
+	var dynamoDBEndpoint string
+	dynamoDBRegion := "ap-north-east-1"
 
-	dynamoDBEndpoint := os.Getenv("DYNAMO_ENDPOINT")
-	if len(dynamoDBEndpoint) != 0 {
+	if os.Getenv("AWS_SAM_LOCAL") == "true" {
+		dynamoDBEndpoint = "http://dynamodb-local:8000"
 		disableSsl = true
 	}
-
-	dynamoDBRegion := "ap-north-east-1"
 
 	ses := session.Must(session.NewSession())
 

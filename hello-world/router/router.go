@@ -67,7 +67,7 @@ func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 	case "/image":
 		switch method {
 		case "POST":
-			image.ImagePost()
+			response = image.ImagePost(request, idTokenPayload)
 		}
 	case "/auth":
 		switch method {

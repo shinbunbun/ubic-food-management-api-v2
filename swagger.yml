@@ -213,7 +213,7 @@ paths:
         in: "body"
         schema:
           type: "string"
-          format: "binary"
+          format: "base64"
       responses:
         200:
           description: "成功時のレスポンス"

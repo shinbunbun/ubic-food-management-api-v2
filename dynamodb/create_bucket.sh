@@ -1,0 +1,1 @@
+aws --endpoint-url http://localhost:4566 --profile local s3api create-bucket --bucket s3-bucket

@@ -24,6 +24,7 @@ services:
       - dynamodb-local-network
 
   localstack:
+    container_name: localstack
     image: localstack/localstack
     environment:
       - SERVICES=s3
@@ -34,7 +35,7 @@ services:
     ports:
       - 4566:4566
     networks:
-      sam-app:
+      - dynamodb-local-network
 
 volumes:
   dynamodb-local-data:
@@ -42,3 +43,4 @@ volumes:
 networks:
   dynamodb-local-network:
     name: docker.internal
+    driver: bridge

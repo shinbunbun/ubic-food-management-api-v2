@@ -14,7 +14,8 @@ Globals:
         STAGE: prod
         CHANNEL_ID: dummy
         CHANNEL_SECRET: dummy
-        DYNAMO_ENDPOINT: ""
+        AWS_SAM_LOCAL: dummy
+        S3_BUCKET_NAME: dummy 
 
 Resources:
   HelloWorldFunction:
