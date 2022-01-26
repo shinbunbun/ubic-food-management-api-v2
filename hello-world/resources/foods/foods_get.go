@@ -41,7 +41,7 @@ func FoodsGet(request events.APIGatewayProxyRequest, idTokenPayload token.Payloa
 			food.Name = v.Data
 		}
 		if v.DataType == "food-stock" {
-			food.Stock = v.IntData
+			food.Stock = *(v.IntData)
 		}
 		foodsMap[v.ID] = food
 	}

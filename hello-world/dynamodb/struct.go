@@ -5,5 +5,5 @@ type DynamoItem struct {
 	DataType string
 	Data     string `dynamo:",omitempty"`
 	DataKind string
-	IntData  int `dynamo:",omitempty"`
+	IntData  *int `dynamo:",omitempty"`
 }

@@ -87,7 +87,7 @@ func getFoodDataByID(foodId string) (types.Food, error) {
 	if err != nil {
 		return types.Food{}, err
 	}
-	foodData.Stock = foodStockCol.IntData
+	foodData.Stock = *(foodStockCol.IntData)
 
 	return foodData, nil
 }
