@@ -23,6 +23,19 @@ services:
     networks:
       - dynamodb-local-network
 
+  localstack:
+    image: localstack/localstack
+    environment:
+      - SERVICES=s3
+      - DEFAULT_REGION=ap-northeast-1
+      - DATA_DIR=/tmp/localstack/data
+    # volumes:
+    #   - ./data/localstack:/tmp/localstack
+    ports:
+      - 4566:4566
+    networks:
+      sam-app:
+
 volumes:
   dynamodb-local-data:
 
