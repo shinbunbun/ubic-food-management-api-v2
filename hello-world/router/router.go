@@ -57,7 +57,7 @@ func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 	case "/food":
 		switch method {
 		case "POST":
-			food.FoodPost()
+			response = food.FoodPost(request, idTokenPayload)
 		case "PATCH":
 			food.FoodPatch()
 		}

@@ -30,8 +30,53 @@ func (f *Food) Get() error {
 			f.Name = v.Data
 		}
 		if v.DataType == "food-stock" {
-			f.Stock = v.IntData
+			f.Stock = *(v.IntData)
 		}
 	}
+	return nil
+}
+
+func (f *Food) Put() error {
+
+	err := dynamodb.Put(dynamodb.DynamoItem{
+		ID:       f.ID,
+		DataType: "food-image",
+		Data:     f.ImageUrl,
+		DataKind: "food",
+	})
+	if err != nil {
+		return err
+	}
+
+	err = dynamodb.Put(dynamodb.DynamoItem{
+		ID:       f.ID,
+		DataType: "food-maker",
+		Data:     f.Maker,
+		DataKind: "food",
+	})
+	if err != nil {
+		return err
+	}
+
+	err = dynamodb.Put(dynamodb.DynamoItem{
+		ID:       f.ID,
+		DataType: "food-name",
+		Data:     f.Name,
+		DataKind: "food",
+	})
+	if err != nil {
+		return err
+	}
+
+	err = dynamodb.Put(dynamodb.DynamoItem{
+		ID:       f.ID,
+		DataType: "food-stock",
+		IntData:  &(f.Stock),
+		DataKind: "food",
+	})
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
