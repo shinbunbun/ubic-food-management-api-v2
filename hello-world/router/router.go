@@ -58,8 +58,11 @@ func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 		switch method {
 		case "POST":
 			response = food.FoodPost(request, idTokenPayload)
+		}
+	case "/food/{foodId}":
+		switch method {
 		case "PATCH":
-			food.FoodPatch()
+			response = food.FoodPatch(request, idTokenPayload)
 		}
 	case "/image":
 		switch method {
