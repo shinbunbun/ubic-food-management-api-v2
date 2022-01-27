@@ -49,11 +49,11 @@ func TransactionPost(request events.APIGatewayProxyRequest, idTokenPayload token
 		return response.StatusCode400(errors.New("food is out of stock"))
 	}
 
-	err = dynamodb.AddIntData(-1, food.ID, "food-stock")
+	/* err = dynamodb.AddIntData(-1, food.ID, "food-stock")
 	if err != nil {
 		fmt.Println("Error adding food stock:", err.Error())
 		return response.StatusCode500(err)
-	}
+	} */
 
 	err = transaction.Put(idTokenPayload.Sub)
 	if err != nil {
