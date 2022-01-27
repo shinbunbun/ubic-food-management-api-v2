@@ -14,25 +14,20 @@ import (
 var Uploader *s3manager.Uploader
 
 func init() {
-	var endpoint string
-	disableSsl := false
+
+	ses := session.Must(session.NewSession())
+	var s3vc *s3.S3
 
 	if os.Getenv("AWS_SAM_LOCAL") == "true" {
-		endpoint = "http://localstack:4566"
-		disableSsl = true
+		s3vc = s3.New(ses, &aws.Config{
+			S3ForcePathStyle: aws.Bool(true),
+			Region:           aws.String("ap-north-east-1"),
+			Endpoint:         aws.String("http://localstack:4566"),
+			DisableSSL:       aws.Bool(false),
+		})
+	} else {
+		s3vc = s3.New(ses)
 	}
-	/* ses, err := session.NewSession(&aws.Config{
-		Region:     aws.String(endpoints.ApNortheast1RegionID),
-		Endpoint:   aws.String(endpoint),
-		DisableSSL: aws.Bool(disableSsl),
-	}) */
-	ses := session.Must(session.NewSession())
-	s3vc := s3.New(ses, &aws.Config{
-		S3ForcePathStyle: aws.Bool(true),
-		Region:           aws.String("ap-north-east-1"),
-		Endpoint:         aws.String(endpoint),
-		DisableSSL:       aws.Bool(disableSsl),
-	})
 
 	Uploader = s3manager.NewUploaderWithClient(s3vc)
 }
@@ -43,6 +38,7 @@ func Upload(buf *bytes.Buffer, fileName string, contentType string) (string, err
 		Key:         aws.String(fileName),
 		Body:        bytes.NewReader(buf.Bytes()),
 		ContentType: aws.String(contentType),
+		ACL:         aws.String("public-read"),
 	})
 	if err != nil {
 		fmt.Printf("s3 upload error: %s\n", err.Error())

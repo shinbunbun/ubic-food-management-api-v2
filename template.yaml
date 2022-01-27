@@ -21,6 +21,8 @@ Parameters:
     Type: String
   DynamoDBArn:
     Type: String
+  S3Arn:
+    Type: String
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -92,6 +94,11 @@ Resources:
                   - "dynamodb:UpdateItem"
                   - "dynamodb:PutItem"
                 Resource: !Ref DynamoDBArn
+              - Effect: "Allow"
+                Action:
+                  - "s3:PutObject"
+                  - "s3:PutObjectAcl"
+                Resource: !Ref S3Arn
               - Effect: "Allow"
                 Action:
                 - "logs:CreateLogGroup"
