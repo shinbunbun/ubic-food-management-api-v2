@@ -11,7 +11,12 @@ Parameters:
     Type: String
   S3BucketName:
     Type: String
-  
+  DomainName:
+    Type: String
+  HostedZoneId:
+    Type: String
+  CertificateArn:
+    Type: String
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -26,6 +31,11 @@ Globals:
         S3_BUCKET_NAME: !Ref S3BucketName 
   Api:
     OpenApiVersion: 2.0.0
+    Domain:
+      DomainName: !Ref DomainName
+      CertificateArn: !Ref CertificateArn
+      Route53:
+        HostedZoneId: !Ref HostedZoneId
 
 Resources:
   ApiRole:
@@ -60,7 +70,7 @@ Resources:
           Parameters:
             Location: ./swagger.yml
       MethodSettings:
-        - LoggingLevel: INFO
+        - LoggingLevel: ERROR
           ResourcePath: '/*' 
           HttpMethod: '*' 
   HelloWorldFunction:
