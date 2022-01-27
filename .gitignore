@@ -17,3 +17,4 @@
 .aws-sam
 env.json
 deploy.sh
+samconfig.toml
