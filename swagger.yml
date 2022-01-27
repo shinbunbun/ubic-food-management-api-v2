@@ -29,7 +29,7 @@ paths:
         uri:
           Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
         passthroughBehavior: when_no_templates
-        httpMethod: GET
+        httpMethod: POST
         type: aws_proxy
       x-amazon-apigateway-cors:
           allowOrigins: ["*"]
@@ -79,7 +79,7 @@ paths:
         uri:
           Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
         passthroughBehavior: when_no_templates
-        httpMethod: DELETE
+        httpMethod: POST
         type: aws_proxy
       x-amazon-apigateway-cors:
           allowOrigins: ["*"]
@@ -110,8 +110,8 @@ paths:
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
-      x-amazon-apigateway-cors:
-          allowOrigins: ["*"]
+      # x-amazon-apigateway-cors:
+      #     allowOrigins: ["*"]
 
   /foods:
     get:
@@ -130,7 +130,7 @@ paths:
         uri:
           Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
         passthroughBehavior: when_no_templates
-        httpMethod: GET
+        httpMethod: POST
         type: aws_proxy
       x-amazon-apigateway-cors:
           allowOrigins: ["*"]
@@ -197,7 +197,7 @@ paths:
         uri:
           Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
         passthroughBehavior: when_no_templates
-        httpMethod: PATCH
+        httpMethod: POST
         type: aws_proxy
       x-amazon-apigateway-cors:
           allowOrigins: ["*"]
@@ -248,7 +248,7 @@ paths:
         uri:
           Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
         passthroughBehavior: when_no_templates
-        httpMethod: GET
+        httpMethod: POST
         type: aws_proxy
   /callback:
     get:
@@ -272,7 +272,7 @@ paths:
         uri:
           Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
         passthroughBehavior: when_no_templates
-        httpMethod: GET
+        httpMethod: POST
         type: aws_proxy
 
 
