@@ -124,31 +124,6 @@ Resources:
       Architectures:
         - x86_64
       Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
-      Events:
-        UserGet:
-          Type: Api
-          Properties:
-            Path: /user
-            Method: get
-            RestApiId: !Ref Api
-        TransactionDelete:
-          Type: Api
-          Properties:
-            Path: /transaction
-            Method: delete
-            RestApiId: !Ref Api
-        AuthGet:
-          Type: Api
-          Properties:
-            Path: /auth
-            Method: get
-            RestApiId: !Ref Api
-        CallbackGet:
-          Type: Api
-          Properties:
-            Path: /callback
-            Method: get
-            RestApiId: !Ref Api
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
