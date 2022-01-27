@@ -2,7 +2,6 @@ package auth
 
 import (
 	"os"
-	"ubic-food/config"
 	"ubic-food/hash"
 	"ubic-food/random"
 	"ubic-food/response"
@@ -11,7 +10,7 @@ import (
 )
 
 func AuthGet(request events.APIGatewayProxyRequest) events.APIGatewayProxyResponse {
-	channelId := config.GetEnv("CHANNEL_ID")
+	channelId := os.Getenv("CHANNEL_ID")
 	redirectUri := os.Getenv("REDIRECT_URI")
 	state, err := random.GenerateRandomString(32)
 	if err != nil {

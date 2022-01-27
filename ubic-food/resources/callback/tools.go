@@ -9,7 +9,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"ubic-food/config"
 	"ubic-food/cookie"
 	"ubic-food/hash"
 
@@ -35,8 +34,8 @@ func getAccessToken(code string) (tokenResponse, error) {
 	form.Add("grant_type", "authorization_code")
 	form.Add("code", code)
 	form.Add("redirect_uri", os.Getenv("REDIRECT_URI"))
-	form.Add("client_id", config.GetEnv("CHANNEL_ID"))
-	form.Add("client_secret", config.GetEnv("CHANNEL_SECRET"))
+	form.Add("client_id", os.Getenv("CHANNEL_ID"))
+	form.Add("client_secret", os.Getenv("CHANNEL_SECRET"))
 	body := strings.NewReader(form.Encode())
 
 	reqUrl := "https://api.line.me/oauth2/v2.1/token"

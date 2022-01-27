@@ -4,9 +4,9 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"os"
 	"strings"
 	"time"
-	"ubic-food/config"
 	"ubic-food/cookie"
 	"ubic-food/hash"
 )
@@ -79,7 +79,7 @@ func VerifyIssuer(idTokenPayload Payload) error {
 }
 
 func VerifyAud(idTokenPayload Payload) error {
-	if idTokenPayload.Aud != config.GetEnv("CHANNEL_ID") {
+	if idTokenPayload.Aud != os.Getenv("CHANNEL_ID") {
 		return errors.New("Aud is not valid")
 	}
 	return nil

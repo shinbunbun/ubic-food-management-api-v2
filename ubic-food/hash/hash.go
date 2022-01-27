@@ -4,7 +4,7 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/hex"
-	"ubic-food/config"
+	"os"
 
 	"golang.org/x/crypto/sha3"
 )
@@ -16,7 +16,7 @@ func CreateSha3_256Hash(val string) string {
 }
 
 func CreateSha256HMAC(msg string) []byte {
-	key := config.GetEnv("CHANNEL_SECRET")
+	key := os.Getenv("CHANNEL_SECRET")
 	mac := hmac.New(sha256.New, []byte(key))
 	mac.Write([]byte(msg))
 	return mac.Sum(nil)
