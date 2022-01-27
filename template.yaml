@@ -83,12 +83,8 @@ Resources:
             Statement:
               - Effect: "Allow"
                 Action:
-                  - "dynamodb:BatchGetItem"
-                  - "dynamodb:DescribeStream"
-                  - "dynamodb:DescribeTable"
-                  - "dynamodb:Get*"
+                  - "dynamodb:GetItem"
                   - "dynamodb:Query"
-                  - "dynamodb:Scan"
                   - "dynamodb:BatchWriteItem"
                   - "dynamodb:DeleteItem"
                   - "dynamodb:UpdateItem"
