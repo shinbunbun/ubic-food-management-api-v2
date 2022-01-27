@@ -2,7 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
   ubic-food-management-api-v2
-  
   Sample SAM Template for ubic-food-management-api-v2
 Parameters:
   ChannelId:
@@ -65,7 +64,7 @@ Resources:
                 Action:
                   - lambda:InvokeFunction
                 Resource:
-                  - Fn::Sub: ${HelloWorldFunction.Arn}
+                  - Fn::Sub: ${UBICFoodFunction.Arn}
   FunctionRole:
     Type: AWS::IAM::Role
     Properties:
@@ -115,11 +114,11 @@ Resources:
         - LoggingLevel: ERROR
           ResourcePath: '/*' 
           HttpMethod: '*' 
-  HelloWorldFunction:
+  UBICFoodFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       Role: !GetAtt FunctionRole.Arn
-      CodeUri: hello-world/
+      CodeUri: ubic-food/
       Handler: hello-world
       Runtime: go1.x
       Architectures:
@@ -153,12 +152,12 @@ Resources:
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Sub /aws/lambda/${HelloWorldFunction}
+      LogGroupName: !Sub /aws/lambda/${UBICFoodFunction}
 
 Outputs:
-  HelloWorldFunction:
+  UBICFoodFunction:
     Description: "First Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
+    Value: !GetAtt UBICFoodFunction.Arn
   # HelloWorldFunctionIamRole:
   #   Description: "Implicit IAM Role created for Hello World function"
   #   Value: !GetAtt HelloWorldFunctionRole.Arn
