@@ -13,22 +13,19 @@ import (
 var table dynamo.Table
 
 func CreateTable() {
-	disableSsl := false
-	var dynamoDBEndpoint string
-	dynamoDBRegion := "ap-north-east-1"
 
-	if os.Getenv("AWS_SAM_LOCAL") == "true" {
-		dynamoDBEndpoint = "http://dynamodb-local:8000"
-		disableSsl = true
-	}
-
+	var db *dynamo.DB
 	ses := session.Must(session.NewSession())
 
-	db := dynamo.New(ses, &aws.Config{
-		Region:     aws.String(dynamoDBRegion),
-		Endpoint:   aws.String(dynamoDBEndpoint),
-		DisableSSL: aws.Bool(disableSsl),
-	})
+	if os.Getenv("AWS_SAM_LOCAL") == "true" {
+		db = dynamo.New(ses, &aws.Config{
+			Region:     aws.String("ap-north-east-1"),
+			Endpoint:   aws.String("http://dynamodb-local:8000"),
+			DisableSSL: aws.Bool(true),
+		})
+	} else {
+		db = dynamo.New(ses)
+	}
 
 	table = db.Table("UBIC-FOOD")
 }
