@@ -11,5 +11,5 @@ func GetCookieValue(cookie []string, key string) (string, error) {
 			return strings.Split(v, "=")[1], nil
 		}
 	}
-	return "", errors.New("Cookie not found")
+	return "", errors.New("Cookie not found: " + key)
 }

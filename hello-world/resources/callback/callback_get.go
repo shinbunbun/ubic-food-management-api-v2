@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"hello-world/response"
 	"hello-world/token"
+	"net/http"
 	"strings"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -13,7 +14,14 @@ func CallbackGet(request events.APIGatewayProxyRequest) events.APIGatewayProxyRe
 
 	query := request.QueryStringParameters
 
-	requestCookie := strings.Split(request.Headers["Cookie"], "; ")
+	headers := http.Header{}
+	for header, values := range request.MultiValueHeaders {
+		for _, value := range values {
+			headers.Add(header, value)
+		}
+	}
+
+	requestCookie := strings.Split(headers.Get("cookie"), "; ")
 
 	err := checkState(query, requestCookie, request)
 	if err != nil {
