@@ -9,6 +9,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"strings"
 
@@ -33,7 +34,7 @@ func getAccessToken(code string) (tokenResponse, error) {
 	form := url.Values{}
 	form.Add("grant_type", "authorization_code")
 	form.Add("code", code)
-	form.Add("redirect_uri", config.GetRedirectUri())
+	form.Add("redirect_uri", os.Getenv("REDIRECT_URI"))
 	form.Add("client_id", config.GetEnv("CHANNEL_ID"))
 	form.Add("client_secret", config.GetEnv("CHANNEL_SECRET"))
 	body := strings.NewReader(form.Encode())

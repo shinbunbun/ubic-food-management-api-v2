@@ -17,6 +17,8 @@ Parameters:
     Type: String
   CertificateArn:
     Type: String
+  RedirectUri:
+    Type: String
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -28,7 +30,8 @@ Globals:
         CHANNEL_ID: !Ref ChannelId
         CHANNEL_SECRET: !Ref ChannelSecret
         AWS_SAM_LOCAL: "false"
-        S3_BUCKET_NAME: !Ref S3BucketName 
+        S3_BUCKET_NAME: !Ref S3BucketName
+        REDIRECT_URI: !Ref RedirectUri
   Api:
     OpenApiVersion: 2.0.0
     Domain:

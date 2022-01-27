@@ -5,13 +5,14 @@ import (
 	"hello-world/hash"
 	"hello-world/random"
 	"hello-world/response"
+	"os"
 
 	"github.com/aws/aws-lambda-go/events"
 )
 
 func AuthGet(request events.APIGatewayProxyRequest) events.APIGatewayProxyResponse {
 	channelId := config.GetEnv("CHANNEL_ID")
-	redirectUri := config.GetRedirectUri()
+	redirectUri := os.Getenv("REDIRECT_URI")
 	state, err := random.GenerateRandomString(32)
 	if err != nil {
 		return response.StatusCode500(err)
