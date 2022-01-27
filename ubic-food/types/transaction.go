@@ -1,8 +1,8 @@
 package types
 
 import (
-	"hello-world/dynamodb"
 	"strconv"
+	"ubic-food/dynamodb"
 )
 
 type Transaction struct {

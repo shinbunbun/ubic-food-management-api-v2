@@ -119,7 +119,7 @@ Resources:
     Properties:
       Role: !GetAtt FunctionRole.Arn
       CodeUri: ubic-food/
-      Handler: hello-world
+      Handler: ubic-food
       Runtime: go1.x
       Architectures:
         - x86_64

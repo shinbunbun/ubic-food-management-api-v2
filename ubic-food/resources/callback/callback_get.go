@@ -2,10 +2,10 @@ package callback
 
 import (
 	"fmt"
-	"hello-world/response"
-	"hello-world/token"
 	"net/http"
 	"strings"
+	"ubic-food/response"
+	"ubic-food/token"
 
 	"github.com/aws/aws-lambda-go/events"
 )

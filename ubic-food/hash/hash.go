@@ -4,7 +4,7 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/hex"
-	"hello-world/config"
+	"ubic-food/config"
 
 	"golang.org/x/crypto/sha3"
 )

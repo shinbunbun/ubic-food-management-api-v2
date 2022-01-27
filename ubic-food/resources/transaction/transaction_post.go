@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"hello-world/dynamodb"
-	"hello-world/response"
-	"hello-world/token"
-	"hello-world/types"
 	"time"
+	"ubic-food/dynamodb"
+	"ubic-food/response"
+	"ubic-food/token"
+	"ubic-food/types"
 
 	"github.com/aws/aws-lambda-go/events"
 )

@@ -1,11 +1,11 @@
 package auth
 
 import (
-	"hello-world/config"
-	"hello-world/hash"
-	"hello-world/random"
-	"hello-world/response"
 	"os"
+	"ubic-food/config"
+	"ubic-food/hash"
+	"ubic-food/random"
+	"ubic-food/response"
 
 	"github.com/aws/aws-lambda-go/events"
 )

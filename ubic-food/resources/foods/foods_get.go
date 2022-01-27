@@ -3,10 +3,10 @@ package foods
 import (
 	"encoding/json"
 	"fmt"
-	"hello-world/dynamodb"
-	"hello-world/response"
-	"hello-world/token"
-	"hello-world/types"
+	"ubic-food/dynamodb"
+	"ubic-food/response"
+	"ubic-food/token"
+	"ubic-food/types"
 
 	"github.com/aws/aws-lambda-go/events"
 )

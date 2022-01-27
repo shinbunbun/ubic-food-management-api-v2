@@ -4,11 +4,11 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
-	"hello-world/config"
-	"hello-world/cookie"
-	"hello-world/hash"
 	"strings"
 	"time"
+	"ubic-food/config"
+	"ubic-food/cookie"
+	"ubic-food/hash"
 )
 
 func VerifyIdToken(requestCookie []string, idToken string) (Payload, error) {

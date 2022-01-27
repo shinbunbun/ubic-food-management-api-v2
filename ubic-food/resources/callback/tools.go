@@ -3,15 +3,15 @@ package callback
 import (
 	"encoding/json"
 	"errors"
-	"hello-world/config"
-	"hello-world/cookie"
-	"hello-world/hash"
 	"io"
 	"net/http"
 	"net/url"
 	"os"
 	"strconv"
 	"strings"
+	"ubic-food/config"
+	"ubic-food/cookie"
+	"ubic-food/hash"
 
 	"github.com/aws/aws-lambda-go/events"
 )

@@ -27,7 +27,7 @@ paths:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UBICFoodFunction.Arn}/invocations
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
@@ -77,7 +77,7 @@ paths:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UBICFoodFunction.Arn}/invocations
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
@@ -106,7 +106,7 @@ paths:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UBICFoodFunction.Arn}/invocations
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
@@ -128,7 +128,7 @@ paths:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UBICFoodFunction.Arn}/invocations
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
@@ -161,7 +161,7 @@ paths:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UBICFoodFunction.Arn}/invocations
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
@@ -195,7 +195,7 @@ paths:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UBICFoodFunction.Arn}/invocations
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
@@ -226,7 +226,7 @@ paths:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UBICFoodFunction.Arn}/invocations
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
@@ -246,7 +246,7 @@ paths:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UBICFoodFunction.Arn}/invocations
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
@@ -270,7 +270,7 @@ paths:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UBICFoodFunction.Arn}/invocations
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy

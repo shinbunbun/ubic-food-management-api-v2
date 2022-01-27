@@ -1,14 +1,14 @@
 package router
 
 import (
-	"hello-world/resources/auth"
-	"hello-world/resources/callback"
-	"hello-world/resources/food"
-	"hello-world/resources/foods"
-	"hello-world/resources/image"
-	"hello-world/resources/transaction"
-	"hello-world/resources/user"
-	"hello-world/token"
+	"ubic-food/resources/auth"
+	"ubic-food/resources/callback"
+	"ubic-food/resources/food"
+	"ubic-food/resources/foods"
+	"ubic-food/resources/image"
+	"ubic-food/resources/transaction"
+	"ubic-food/resources/user"
+	"ubic-food/token"
 
 	"github.com/aws/aws-lambda-go/events"
 )
