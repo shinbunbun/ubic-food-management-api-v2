@@ -29,6 +29,7 @@ jobs:
         uses: golangci/golangci-lint-action@v2
         with:
           version: v1.29
+          working-directory: ubic-food
 
   go-test:
     needs: setup-go
@@ -48,4 +49,4 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-1
-      - run: sam build
+      - run: sam build --use-container
