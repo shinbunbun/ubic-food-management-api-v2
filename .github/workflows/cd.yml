@@ -19,6 +19,7 @@ jobs:
       - run: "sam deploy \
           --no-confirm-changeset \
           --no-fail-on-empty-changeset \
+          --stack-name ubic-food-management-api-v2 \
           --parameter-overrides \
           ChannelId=${{ secrets.CHANNEL_ID }} \
           ChannelSecret=${{ secrets.CHANNEL_SECRET }} \
