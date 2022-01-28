@@ -36,7 +36,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: test
-        run: cd ubic-food && go test ./... -v
+        run: go test ./... -v
+        working-directory: ubic-food
 
   build-check:
     runs-on: ubuntu-latest
