@@ -16,8 +16,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-1
       - run: sam build --use-container
-      - run:
-          sam deploy \
+      - run: "sam deploy \
           --no-confirm-changeset \
           --no-fail-on-empty-changeset \
           --parameter-overrides \
@@ -29,4 +28,4 @@ jobs:
           RedirectUri=${{ secrets.REDIRECT_URI }} \
           CertificateArn=${{ secrets.CERTIFICATE_ARN }} \
           DynamoDBArn=${{ secrets.DYNAMO_DB_ARN }}
-          S3Arn=${{ secrets.S3_ARN }}
+          S3Arn=${{ secrets.S3_ARN }}"
