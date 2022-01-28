@@ -36,6 +36,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: tidy
+        run: go mod tidy
+        working-directory: ubic-food 
       - name: test
         run: go test ./... -v
         working-directory: ubic-food
