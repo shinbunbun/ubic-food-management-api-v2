@@ -67,7 +67,16 @@ Resources:
                 Action:
                   - lambda:InvokeFunction
                 Resource:
-                  - Fn::Sub: ${UBICFoodFunction.Arn}
+                  - Fn::Sub: ${AuthGetFunction.Arn}
+                  - Fn::Sub: ${UserGetFunction.Arn}
+                  - Fn::Sub: ${TransactionDeleteFunction.Arn}
+                  - Fn::Sub: ${TransactionPostFunction.Arn}
+                  - Fn::Sub: ${FoodsGetFunction.Arn}
+                  - Fn::Sub: ${FoodPostFunction.Arn}
+                  - Fn::Sub: ${FoodPatchFunction.Arn}
+                  - Fn::Sub: ${ImagePostFunction.Arn}
+                  - Fn::Sub: ${CallbackGetFunction.Arn}
+                  - Fn::Sub: ${AuthorizerFunction.Arn}
   FunctionRole:
     Type: AWS::IAM::Role
     Properties:
@@ -183,15 +192,15 @@ Resources:
     Properties:
       CodeUri: functions/authorizer
       Handler: functions/authorizer.lambda_handler
-  LogGroup:
-    Type: AWS::Logs::LogGroup
-    Properties:
-      LogGroupName: !Sub /aws/lambda/${UBICFoodFunction}
+  # LogGroup:
+  #   Type: AWS::Logs::LogGroup
+  #   Properties:
+  #     LogGroupName: !Sub /aws/lambda/${UBICFoodFunction}
 
-Outputs:
-  UBICFoodFunction:
-    Description: "First Lambda Function ARN"
-    Value: !GetAtt UBICFoodFunction.Arn
+# Outputs:
+#   UBICFoodFunction:
+#     Description: "First Lambda Function ARN"
+#     Value: !GetAtt UBICFoodFunction.Arn
   # HelloWorldFunctionIamRole:
   #   Description: "Implicit IAM Role created for Hello World function"
   #   Value: !GetAtt HelloWorldFunctionRole.Arn
