@@ -1,16 +1,16 @@
-package transaction
+package main
 
 import (
 	"ubic-food/functions/api/dynamodb"
 	"ubic-food/functions/api/response"
-	"ubic-food/functions/api/token"
+
+	"github.com/guregu/dynamo"
 
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/guregu/dynamo"
+	"github.com/aws/aws-lambda-go/lambda"
 )
 
-func TransactionDelete(request events.APIGatewayProxyRequest, idTokenPayload token.Payload) events.APIGatewayProxyResponse {
-
+func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	transactionId := request.PathParameters["transactionId"]
 
 	dynamodb.CreateTable()
@@ -23,8 +23,12 @@ func TransactionDelete(request events.APIGatewayProxyRequest, idTokenPayload tok
 
 	err := dynamodb.BatchDelete(keyed)
 	if err != nil {
-		return response.StatusCode500(err)
+		return response.StatusCode500(err), nil
 	}
 
-	return response.StatusCode204()
+	return response.StatusCode204(), nil
+}
+
+func main() {
+	lambda.Start(handler)
 }

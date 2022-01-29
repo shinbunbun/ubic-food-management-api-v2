@@ -131,17 +131,23 @@ Resources:
       CodeUri: functions/api
       Handler: functions/api
   AuthGetFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt FunctionRole.Arn
       CodeUri: functions/auth_get/
       Handler: functions/auth_get
   UserGetFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt FunctionRole.Arn
       CodeUri: functions/user_get/
       Handler: functions/user_get
+  TransactionDeleteFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt FunctionRole.Arn
+      CodeUri: functions/transaction_delete/
+      Handler: functions/transaction_delete
   AuthorizerFunction:
     Type: AWS::Serverless::Function
     Properties:

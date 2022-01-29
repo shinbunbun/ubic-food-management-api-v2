@@ -31,11 +31,6 @@ func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 	}
 
 	switch resource {
-	case "/transaction/{transactionId}":
-		switch method {
-		case "DELETE":
-			res = transaction.TransactionDelete(request, idTokenPayload)
-		}
 	case "/transaction":
 		switch method {
 		case "POST":
