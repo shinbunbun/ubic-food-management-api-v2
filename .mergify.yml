@@ -1,0 +1,10 @@
+pull_request_rules:
+  - name: Automatic merge on approval
+    conditions:
+      - "status-success=go-lint"
+      - "status-success=go-test"
+      - "status-success=build-check"
+      - "label=automerge"
+    actions:
+      merge:
+        method: merge
