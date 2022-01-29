@@ -124,12 +124,6 @@ Resources:
         - LoggingLevel: ERROR
           ResourcePath: '/*' 
           HttpMethod: '*' 
-  UBICFoodFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      Role: !GetAtt FunctionRole.Arn
-      CodeUri: functions/api
-      Handler: functions/api
   AuthGetFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -178,7 +172,12 @@ Resources:
       Role: !GetAtt FunctionRole.Arn
       CodeUri: functions/image_post/
       Handler: functions/image_post
-
+  CallbackGetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt FunctionRole.Arn
+      CodeUri: functions/callback_get/
+      Handler: functions/callback_get
   AuthorizerFunction:
     Type: AWS::Serverless::Function
     Properties:
