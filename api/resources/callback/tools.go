@@ -9,8 +9,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"ubic-food/cookie"
-	"ubic-food/hash"
+	"ubic-food/api/cookie"
+	"ubic-food/api/hash"
 
 	"github.com/aws/aws-lambda-go/events"
 )

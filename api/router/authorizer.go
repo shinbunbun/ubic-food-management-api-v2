@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	"ubic-food/token"
+	"ubic-food/api/token"
 
 	"github.com/aws/aws-lambda-go/events"
 )

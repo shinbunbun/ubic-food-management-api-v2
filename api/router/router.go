@@ -1,14 +1,14 @@
 package router
 
 import (
-	"ubic-food/resources/auth"
-	"ubic-food/resources/callback"
-	"ubic-food/resources/food"
-	"ubic-food/resources/foods"
-	"ubic-food/resources/image"
-	"ubic-food/resources/transaction"
-	"ubic-food/resources/user"
-	"ubic-food/token"
+	"ubic-food/api/resources/auth"
+	"ubic-food/api/resources/callback"
+	"ubic-food/api/resources/food"
+	"ubic-food/api/resources/foods"
+	"ubic-food/api/resources/image"
+	"ubic-food/api/resources/transaction"
+	"ubic-food/api/resources/user"
+	"ubic-food/api/token"
 
 	"github.com/aws/aws-lambda-go/events"
 )

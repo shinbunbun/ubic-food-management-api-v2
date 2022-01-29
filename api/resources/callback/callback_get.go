@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-	"ubic-food/response"
-	"ubic-food/token"
+	"ubic-food/api/response"
+	"ubic-food/api/token"
 
 	"github.com/aws/aws-lambda-go/events"
 )

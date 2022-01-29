@@ -1,9 +1,9 @@
 package transaction
 
 import (
-	"ubic-food/dynamodb"
-	"ubic-food/response"
-	"ubic-food/token"
+	"ubic-food/api/dynamodb"
+	"ubic-food/api/response"
+	"ubic-food/api/token"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/guregu/dynamo"
