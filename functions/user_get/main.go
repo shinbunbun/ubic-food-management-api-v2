@@ -23,8 +23,6 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	userData.UserID = idTokenPayload.Sub
 	userData.Name = idTokenPayload.Name
 
-	dynamodb.CreateTable()
-
 	transactionUserCols, err := dynamodb.GetByDataDataType(userData.UserID, "transaction-user")
 	if err != nil {
 		return response.StatusCode500(err), nil

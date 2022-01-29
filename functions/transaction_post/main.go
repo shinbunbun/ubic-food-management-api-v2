@@ -51,7 +51,6 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		ID: body.FoodId,
 	}
 
-	dynamodb.CreateTable()
 	err = food.Get()
 	if err != nil {
 		fmt.Println("Error getting food:", err.Error())

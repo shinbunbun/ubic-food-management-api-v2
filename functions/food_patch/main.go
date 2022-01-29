@@ -25,7 +25,6 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	foodId := request.PathParameters["foodId"]
 
-	dynamodb.CreateTable()
 	err = dynamodb.AddIntData(addNum, foodId, "food-stock")
 	if err != nil {
 		return response.StatusCode500(err), nil

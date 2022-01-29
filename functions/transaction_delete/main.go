@@ -21,8 +21,6 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return response.StatusCode400(errors.New("is_stock_increment must be a boolean")), nil
 	}
 
-	dynamodb.CreateTable()
-
 	item, err := dynamodb.GetByIDDataType(transactionId, "transaction-food")
 	if err != nil {
 		return response.StatusCode500(errors.New("transaction not found")), nil
