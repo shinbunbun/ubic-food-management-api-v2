@@ -1,8 +1,8 @@
 package main
 
 import (
-	"ubic-food/functions/api/dynamodb"
-	"ubic-food/functions/api/response"
+	"ubic-food/tools/dynamodb"
+	"ubic-food/tools/response"
 
 	"github.com/guregu/dynamo"
 

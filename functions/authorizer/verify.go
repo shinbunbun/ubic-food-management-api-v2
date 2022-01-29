@@ -2,7 +2,7 @@ package main
 
 import (
 	"strings"
-	"ubic-food/functions/api/token"
+	"ubic-food/tools/token"
 )
 
 func verify(authZHeader string) (token.Payload, error) {

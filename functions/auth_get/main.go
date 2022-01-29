@@ -2,9 +2,9 @@ package main
 
 import (
 	"os"
-	"ubic-food/functions/api/hash"
-	"ubic-food/functions/api/random"
-	"ubic-food/functions/api/response"
+	"ubic-food/tools/hash"
+	"ubic-food/tools/random"
+	"ubic-food/tools/response"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"

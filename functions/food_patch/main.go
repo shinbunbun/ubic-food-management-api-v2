@@ -2,9 +2,9 @@ package main
 
 import (
 	"encoding/json"
-	"ubic-food/functions/api/dynamodb"
-	"ubic-food/functions/api/response"
-	"ubic-food/functions/api/types"
+	"ubic-food/tools/dynamodb"
+	"ubic-food/tools/response"
+	"ubic-food/tools/types"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
