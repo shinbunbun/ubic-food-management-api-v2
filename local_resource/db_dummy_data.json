@@ -1,0 +1,130 @@
+{
+  "UBIC-FOOD": [
+    {
+      "PutRequest": {
+        "Item": {
+          "ID": {
+            "S": "transaction-1"
+          },
+          "DataType": {
+            "S": "transaction-date"
+          },
+          "DataKind": {
+            "S": "transaction"
+          },
+          "Data": {
+            "S": "1640523361289"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "ID": {
+            "S": "transaction-1"
+          },
+          "DataType": {
+            "S": "transaction-food"
+          },
+          "DataKind": {
+            "S": "transaction"
+          },
+          "Data": {
+            "S": "food-1"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "ID": {
+            "S": "transaction-1"
+          },
+          "DataType": {
+            "S": "transaction-user"
+          },
+          "DataKind": {
+            "S": "transaction"
+          },
+          "Data": {
+            "S": "user-1"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "ID": {
+            "S": "food-1"
+          },
+          "DataType": {
+            "S": "food-image"
+          },
+          "DataKind": {
+            "S": "food"
+          },
+          "Data": {
+            "S": "https://shinbunbun.info/images/photos/24.jpeg"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "ID": {
+            "S": "food-1"
+          },
+          "DataType": {
+            "S": "food-maker"
+          },
+          "DataKind": {
+            "S": "food"
+          },
+          "Data": {
+            "S": "dummy-maker-1"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "ID": {
+            "S": "food-1"
+          },
+          "DataType": {
+            "S": "food-name"
+          },
+          "DataKind": {
+            "S": "food"
+          },
+          "Data": {
+            "S": "dummy-name-1"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "ID": {
+            "S": "food-1"
+          },
+          "DataType": {
+            "S": "food-stock"
+          },
+          "IntData": {
+            "N": "3"
+          },
+          "DataKind": {
+            "S": "food"
+          }
+        }
+      }
+    }
+  ]
+}
