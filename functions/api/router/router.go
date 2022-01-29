@@ -6,7 +6,6 @@ import (
 	"ubic-food/functions/api/resources/food"
 	"ubic-food/functions/api/resources/foods"
 	"ubic-food/functions/api/resources/image"
-	"ubic-food/functions/api/resources/transaction"
 	"ubic-food/functions/api/response"
 	"ubic-food/functions/api/token"
 
@@ -31,11 +30,6 @@ func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 	}
 
 	switch resource {
-	case "/transaction":
-		switch method {
-		case "POST":
-			res = transaction.TransactionPost(request, idTokenPayload)
-		}
 	case "/foods":
 		switch method {
 		case "GET":

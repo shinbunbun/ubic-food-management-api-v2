@@ -72,7 +72,7 @@ func GetIdTokenPayload(idTokenArr []string) (Payload, error) {
 	return idTokenPayload, nil
 }
 
-func GetIdTokenPayloadByAuthZHeader(request events.APIGatewayProxyRequest) (Payload, error) {
+func GetIdTokenPayloadByRequest(request events.APIGatewayProxyRequest) (Payload, error) {
 	authZHeader := request.Headers["Authorization"]
 	idToken := strings.Split(authZHeader, "Bearer ")[1]
 	idTokenArr := strings.Split(idToken, ".")

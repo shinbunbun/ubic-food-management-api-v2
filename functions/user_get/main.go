@@ -15,7 +15,7 @@ import (
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	var userData types.User
 
-	idTokenPayload, err := token.GetIdTokenPayloadByAuthZHeader(request)
+	idTokenPayload, err := token.GetIdTokenPayloadByRequest(request)
 	if err != nil {
 		return response.StatusCode500(err), nil
 	}

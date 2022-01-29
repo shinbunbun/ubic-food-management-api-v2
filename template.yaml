@@ -148,6 +148,12 @@ Resources:
       Role: !GetAtt FunctionRole.Arn
       CodeUri: functions/transaction_delete/
       Handler: functions/transaction_delete
+  TransactionPostFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt FunctionRole.Arn
+      CodeUri: functions/transaction_post/
+      Handler: functions/transaction_post
   AuthorizerFunction:
     Type: AWS::Serverless::Function
     Properties:
