@@ -16,8 +16,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: test
-        run: docker-compose up -d dynamodb-local localstack && docker-compose up go-test
+      - name: Up dynamodb & localstack
+        run: docker-compose up -d dynamodb-local localstack
+        working-directory: local_resource
+      - name: Copy aws config
+        run: cp -r ./.aws ~/
+        working-directory: local_resource 
+      - name: Create table
+        run: sh create_table.sh
+        working-directory: local_resource
+      - name: Create bucket
+        run: sh create_bucket.sh
+        working-directory: local_resource
+      - name: Add dummy data
+        run: sh add_dummy_data.sh
+        working-directory: local_resource
+      - name: Run test
+        run: docker-compose run go-test
         working-directory: local_resource
 
   build-check:
