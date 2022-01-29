@@ -7,8 +7,10 @@ import (
 	"os"
 	"strings"
 	"time"
-	"ubic-food/api/cookie"
-	"ubic-food/api/hash"
+	"ubic-food/tools/cookie"
+	"ubic-food/tools/hash"
+
+	"github.com/aws/aws-lambda-go/events"
 )
 
 func VerifyIdToken(requestCookie []string, idToken string) (Payload, error) {
@@ -64,6 +66,17 @@ func GetIdTokenPayload(idTokenArr []string) (Payload, error) {
 	}
 	var idTokenPayload Payload
 	err = json.Unmarshal(idTokenPayloadJson, &idTokenPayload)
+	if err != nil {
+		return Payload{}, err
+	}
+	return idTokenPayload, nil
+}
+
+func GetIdTokenPayloadByRequest(request events.APIGatewayProxyRequest) (Payload, error) {
+	authZHeader := request.Headers["Authorization"]
+	idToken := strings.Split(authZHeader, "Bearer ")[1]
+	idTokenArr := strings.Split(idToken, ".")
+	idTokenPayload, err := GetIdTokenPayload(idTokenArr)
 	if err != nil {
 		return Payload{}, err
 	}

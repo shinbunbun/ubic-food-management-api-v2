@@ -1,19 +1,68 @@
-package callback
+package main
 
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
 	"os"
 	"strconv"
 	"strings"
-	"ubic-food/api/cookie"
-	"ubic-food/api/hash"
+	"ubic-food/tools/cookie"
+	"ubic-food/tools/hash"
+	"ubic-food/tools/response"
+	"ubic-food/tools/token"
 
 	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
 )
+
+type tokenResponse struct {
+	AccessToken  string `json:"access_token"`
+	TokenType    string `json:"token_type"`
+	RefreshToken string `json:"refresh_token"`
+	ExpiresIn    int    `json:"expires_in"`
+	Scope        string `json:"scope"`
+	IdToken      string `json:"id_token"`
+}
+
+func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	query := request.QueryStringParameters
+
+	headers := http.Header{}
+	for header, values := range request.MultiValueHeaders {
+		for _, value := range values {
+			headers.Add(header, value)
+		}
+	}
+
+	requestCookie := strings.Split(headers.Get("cookie"), "; ")
+
+	err := checkState(query, requestCookie, request)
+	if err != nil {
+		fmt.Println("State Error:", err)
+		return response.StatusCode400(err), nil
+	}
+
+	code := query["code"]
+
+	tokenRes, err := getAccessToken(code)
+	if err != nil {
+		fmt.Println("Get Token Error:", err)
+		return response.StatusCode500(err), nil
+	}
+	idToken := tokenRes.IdToken
+
+	_, err = token.VerifyIdToken(requestCookie, idToken)
+	if err != nil {
+		fmt.Println("Verify Token Error:", err)
+		return response.StatusCode500(err), nil
+	}
+
+	return response.StatusCode200(idToken), nil
+}
 
 func checkState(query map[string]string, requestCookie []string, request events.APIGatewayProxyRequest) error {
 	callbackStateHash := query["state"]
@@ -67,4 +116,8 @@ func getAccessToken(code string) (tokenResponse, error) {
 		return tokenResponse{}, err
 	}
 	return resBodyStruct, nil
+}
+
+func main() {
+	lambda.Start(handler)
 }
