@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/google/uuid"
 	"github.com/guregu/dynamo"
@@ -19,9 +20,10 @@ func init() {
 
 	if os.Getenv("AWS_SAM_LOCAL") == "true" {
 		db = dynamo.New(ses, &aws.Config{
-			Region:     aws.String("ap-north-east-1"),
-			Endpoint:   aws.String("http://dynamodb-local:8000"),
-			DisableSSL: aws.Bool(true),
+			Region:      aws.String("ap-north-east-1"),
+			Endpoint:    aws.String("http://dynamodb-local:8000"),
+			DisableSSL:  aws.Bool(true),
+			Credentials: credentials.NewStaticCredentials("dummy", "dummy", "dummy"),
 		})
 	} else {
 		db = dynamo.New(ses)
