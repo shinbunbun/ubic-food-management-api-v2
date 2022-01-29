@@ -60,7 +60,7 @@ func VerifySignature(idTokenArr []string) error {
 }
 
 func GetIdTokenPayload(idTokenArr []string) (Payload, error) {
-	idTokenPayloadJson, err := base64.StdEncoding.DecodeString(idTokenArr[1])
+	idTokenPayloadJson, err := base64.RawURLEncoding.DecodeString(idTokenArr[1])
 	if err != nil {
 		return Payload{}, err
 	}

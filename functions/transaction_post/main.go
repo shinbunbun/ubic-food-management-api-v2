@@ -24,12 +24,13 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	isStockDecrement, err := strconv.ParseBool(request.QueryStringParameters["is_stock_decrement"])
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Printf("is_stock_decrement is not bool: %s\n", err.Error())
 		return response.StatusCode400(errors.New("is_stock_decrement must be a boolean")), nil
 	}
 
 	idTokenPayload, err := token.GetIdTokenPayloadByRequest(request)
 	if err != nil {
+		fmt.Printf("Failed to get id token payload: %s\n", err.Error())
 		return response.StatusCode500(err), nil
 	}
 
@@ -37,6 +38,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	var body requestBody
 	err = json.Unmarshal([]byte(bodyStr), &body)
 	if err != nil {
+		fmt.Printf("Failed to parse request body: %s\n", err.Error())
 		return response.StatusCode400(err), nil
 	}
 
