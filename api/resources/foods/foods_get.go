@@ -1,22 +1,26 @@
-package main
+package foods
 
 import (
-	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
-
 	"encoding/json"
-	"ubic-food/tools/dynamodb"
-	"ubic-food/tools/response"
-	"ubic-food/tools/types"
+	"fmt"
+	"ubic-food/api/dynamodb"
+	"ubic-food/api/response"
+	"ubic-food/api/token"
+	"ubic-food/api/types"
+
+	"github.com/aws/aws-lambda-go/events"
 )
 
-func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func FoodsGet(request events.APIGatewayProxyRequest, idTokenPayload token.Payload) events.APIGatewayProxyResponse {
+
 	dynamodb.CreateTable()
 
 	items, err := dynamodb.GetByDataKind("food")
 	if err != nil {
-		return response.StatusCode500(err), nil
+		return response.StatusCode500(err)
 	}
+
+	fmt.Printf("item: %+v\n", items)
 
 	var foodsMap = make(map[string]types.Food)
 	for _, v := range items {
@@ -49,12 +53,8 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	resBody, err := json.Marshal(foods)
 	if err != nil {
-		return response.StatusCode500(err), nil
+		return response.StatusCode500(err)
 	}
 
-	return response.StatusCode200(string(resBody)), nil
-}
-
-func main() {
-	lambda.Start(handler)
+	return response.StatusCode200(string(resBody))
 }
