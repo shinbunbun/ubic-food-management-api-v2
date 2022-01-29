@@ -1,19 +1,11 @@
-package router
+package main
 
 import (
-	"errors"
 	"strings"
-
-	"ubic-food/token"
-
-	"github.com/aws/aws-lambda-go/events"
+	"ubic-food/api/token"
 )
 
-func authorizer(request events.APIGatewayProxyRequest) (token.Payload, error) {
-	authZHeader := request.Headers["Authorization"]
-	if authZHeader == "" {
-		return token.Payload{}, errors.New("Authorization header is empty")
-	}
+func verify(authZHeader string) (token.Payload, error) {
 	idToken := strings.Split(authZHeader, "Bearer ")[1]
 	idTokenArr := strings.Split(idToken, ".")
 	err := token.VerifySignature(idTokenArr)

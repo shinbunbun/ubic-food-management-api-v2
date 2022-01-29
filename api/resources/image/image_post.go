@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"encoding/base64"
 	"encoding/json"
-	"ubic-food/dynamodb"
-	"ubic-food/response"
-	"ubic-food/token"
+	"ubic-food/api/dynamodb"
+	"ubic-food/api/response"
+	"ubic-food/api/token"
 
-	"ubic-food/s3"
+	"ubic-food/api/s3"
 
 	"github.com/aws/aws-lambda-go/events"
 )

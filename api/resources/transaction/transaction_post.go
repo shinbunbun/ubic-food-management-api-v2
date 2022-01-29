@@ -5,10 +5,10 @@ import (
 	"errors"
 	"fmt"
 	"time"
-	"ubic-food/dynamodb"
-	"ubic-food/response"
-	"ubic-food/token"
-	"ubic-food/types"
+	"ubic-food/api/dynamodb"
+	"ubic-food/api/response"
+	"ubic-food/api/token"
+	"ubic-food/api/types"
 
 	"github.com/aws/aws-lambda-go/events"
 )

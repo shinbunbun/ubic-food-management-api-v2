@@ -2,7 +2,7 @@ package types
 
 import (
 	"strconv"
-	"ubic-food/dynamodb"
+	"ubic-food/api/dynamodb"
 )
 
 type Transaction struct {

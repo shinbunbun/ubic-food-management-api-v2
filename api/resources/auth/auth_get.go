@@ -2,9 +2,9 @@ package auth
 
 import (
 	"os"
-	"ubic-food/hash"
-	"ubic-food/random"
-	"ubic-food/response"
+	"ubic-food/api/hash"
+	"ubic-food/api/random"
+	"ubic-food/api/response"
 
 	"github.com/aws/aws-lambda-go/events"
 )
