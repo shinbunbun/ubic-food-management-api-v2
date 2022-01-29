@@ -1,13 +1,13 @@
-package food
+package main
 
 import (
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
+
 	"encoding/json"
 	"ubic-food/functions/api/dynamodb"
 	"ubic-food/functions/api/response"
-	"ubic-food/functions/api/token"
 	"ubic-food/functions/api/types"
-
-	"github.com/aws/aws-lambda-go/events"
 )
 
 type postRequestBody struct {
@@ -16,18 +16,19 @@ type postRequestBody struct {
 	ImageUrl string `json:"imageUrl"`
 }
 
-func FoodPost(request events.APIGatewayProxyRequest, idTokenPayload token.Payload) events.APIGatewayProxyResponse {
+func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+
 	var reqBody postRequestBody
 	err := json.Unmarshal([]byte(request.Body), &reqBody)
 	if err != nil {
-		return response.StatusCode400(err)
+		return response.StatusCode400(err), nil
 	}
 
 	dynamodb.CreateTable()
 	var food types.Food
 	food.ID, err = dynamodb.GenerateID()
 	if err != nil {
-		return response.StatusCode500(err)
+		return response.StatusCode500(err), nil
 	}
 	food.Name = reqBody.Name
 	food.Maker = reqBody.Maker
@@ -36,14 +37,17 @@ func FoodPost(request events.APIGatewayProxyRequest, idTokenPayload token.Payloa
 
 	err = food.Put()
 	if err != nil {
-		return response.StatusCode500(err)
+		return response.StatusCode500(err), nil
 	}
 
 	resBody, err := json.Marshal(food)
 	if err != nil {
-		return response.StatusCode500(err)
+		return response.StatusCode500(err), nil
 	}
 
-	return response.StatusCode200(string(resBody))
+	return response.StatusCode200(string(resBody)), nil
+}
 
+func main() {
+	lambda.Start(handler)
 }
