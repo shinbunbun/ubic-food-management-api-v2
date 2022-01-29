@@ -20,14 +20,11 @@ jobs:
         run: docker-compose up -d dynamodb-local localstack
         working-directory: local_resource
       - name: Create table
-        run: ./create_table
-        working-directory: local_resource
+        run: ./local_resource/create_table
       - name: Create bucket
-        run: ./create_bucket
-        working-directory: local_resource
+        run: ./local_resource/create_bucket
       - name: Add dummy data
-        run: ./add_dummy_data
-        working-directory: local_resource
+        run: ./local_resource/add_dummy_data
       - name: Run test
         run: docker-compose up go-test --exit-code-from go-test
         working-directory: local_resource
