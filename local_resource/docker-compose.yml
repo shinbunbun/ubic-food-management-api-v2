@@ -39,6 +39,9 @@ services:
 
   go-test:
     container_name: go-test
+    depends_on:
+      - dynamodb-local
+      - localstack
     environment:
       - GOPATH=
       - STAGE=local
