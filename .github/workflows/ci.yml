@@ -32,7 +32,7 @@ jobs:
         run: sh add_dummy_data.sh
         working-directory: local_resource
       - name: Run test
-        run: docker-compose up go-test --exit-code-from go-test
+        run: docker-compose run go-test
         working-directory: local_resource
 
   build-check:
