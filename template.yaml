@@ -35,9 +35,6 @@ Globals:
         AWS_SAM_LOCAL: "false"
         S3_BUCKET_NAME: !Ref S3BucketName
         REDIRECT_URI: !Ref RedirectUri
-    Runtime: go1.x
-    Architectures:
-      - x86_64 
   Api:
     OpenApiVersion: 2.0.0
     Domain:
@@ -133,60 +130,16 @@ Resources:
         - LoggingLevel: ERROR
           ResourcePath: '/*' 
           HttpMethod: '*' 
-  AuthGetFunction:
-    Type: AWS::Serverless::Function
+  UBICFoodFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       Role: !GetAtt FunctionRole.Arn
-      CodeUri: functions/auth_get/
-      Handler: functions/auth_get
-  UserGetFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Role: !GetAtt FunctionRole.Arn
-      CodeUri: functions/user_get/
-      Handler: functions/user_get
-  TransactionDeleteFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Role: !GetAtt FunctionRole.Arn
-      CodeUri: functions/transaction_delete/
-      Handler: functions/transaction_delete
-  TransactionPostFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Role: !GetAtt FunctionRole.Arn
-      CodeUri: functions/transaction_post/
-      Handler: functions/transaction_post
-  FoodsGetFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Role: !GetAtt FunctionRole.Arn
-      CodeUri: functions/foods_get/
-      Handler: functions/foods_get
-  FoodPostFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Role: !GetAtt FunctionRole.Arn
-      CodeUri: functions/food_post/
-      Handler: functions/food_post
-  FoodPatchFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Role: !GetAtt FunctionRole.Arn
-      CodeUri: functions/food_patch/
-      Handler: functions/food_patch
-  ImagePostFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Role: !GetAtt FunctionRole.Arn
-      CodeUri: functions/image_post/
-      Handler: functions/image_post
-  CallbackGetFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Role: !GetAtt FunctionRole.Arn
-      CodeUri: functions/callback_get/
-      Handler: functions/callback_get
+      CodeUri: api/
+      Handler: api
+      Runtime: go1.x
+      Architectures:
+        - x86_64
+      Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
   AuthorizerFunction:
     Type: AWS::Serverless::Function
     Properties:
