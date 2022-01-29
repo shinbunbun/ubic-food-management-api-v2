@@ -22,7 +22,9 @@ paths:
               transactions:
                 type: "array"
                 items:
-                  $ref: "#/definitions/transaction" 
+                  $ref: "#/definitions/transaction"
+      security:
+        - LambdaAuthorizer: []
       x-amazon-apigateway-integration:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
@@ -73,6 +75,8 @@ paths:
       responses:
         204:
           description: "成功時のレスポンス"
+      security:
+        - LambdaAuthorizer: []
       x-amazon-apigateway-integration:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
@@ -102,6 +106,8 @@ paths:
           description: "成功時のレスポンス"
           schema:
             $ref: "#/definitions/transaction"
+      security:
+        - LambdaAuthorizer: []
       x-amazon-apigateway-integration:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
@@ -124,6 +130,8 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/food"
+      security:
+        - LambdaAuthorizer: []
       x-amazon-apigateway-integration:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
@@ -157,6 +165,8 @@ paths:
           description: "成功時のレスポンス"
           schema:
             $ref: "#/definitions/food"
+      security:
+        - LambdaAuthorizer: []
       x-amazon-apigateway-integration:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
@@ -191,6 +201,8 @@ paths:
           description: "成功時のレスポンス"
           schema:
             $ref: "#/definitions/food"
+      security:
+        - LambdaAuthorizer: []
       x-amazon-apigateway-integration:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
@@ -222,6 +234,8 @@ paths:
             properties:
               imageUrl:
                 type: "string"
+      security:
+        - LambdaAuthorizer: []
       x-amazon-apigateway-integration:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
@@ -300,7 +314,15 @@ definitions:
       food:
         $ref: "#/definitions/food"
 
-      
-                  
-  #/food/{petId}:
-  #/transaction/{petId}:
+securityDefinitions:
+  LambdaAuthorizer:
+    type: apiKey
+    in: header
+    name: Authorization
+    x-amazon-apigateway-authtype: custom
+    x-amazon-apigateway-authorizer:
+      authorizerUri:
+        'Fn::Sub': >-
+          arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AuthorizerFunction.Arn}/invocations
+      authorizerResultTtlInSeconds: 0
+      type: token
