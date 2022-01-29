@@ -1,7 +1,7 @@
 package main
 
 import (
-	"ubic-food/api/router"
+	"ubic-food/functions/api/router"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"

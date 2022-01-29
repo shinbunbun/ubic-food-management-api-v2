@@ -1,7 +1,7 @@
 package types
 
 import (
-	"ubic-food/api/dynamodb"
+	"ubic-food/functions/api/dynamodb"
 )
 
 type Food struct {

@@ -35,6 +35,9 @@ Globals:
         AWS_SAM_LOCAL: "false"
         S3_BUCKET_NAME: !Ref S3BucketName
         REDIRECT_URI: !Ref RedirectUri
+    Runtime: go1.x
+    Architectures:
+      - x86_64 
   Api:
     OpenApiVersion: 2.0.0
     Domain:
@@ -125,21 +128,19 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       Role: !GetAtt FunctionRole.Arn
-      CodeUri: api/
-      Handler: api
-      Runtime: go1.x
-      Architectures:
-        - x86_64
-      Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
+      CodeUri: functions/api
+      Handler: functions/api
+  AuthGetFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      Role: !GetAtt FunctionRole.Arn
+      CodeUri: functions/auth_get/
+      Handler: functions/auth_get
   AuthorizerFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: authorizer/
-      Handler: authorizer.lambda_handler
-      Runtime: go1.x
-      Timeout: 5
-      Architectures:
-        - x86_64
+      CodeUri: functions/authorizer
+      Handler: functions/authorizer.lambda_handler
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:

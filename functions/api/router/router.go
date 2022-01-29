@@ -2,15 +2,14 @@ package router
 
 import (
 	"strings"
-	"ubic-food/api/resources/auth"
-	"ubic-food/api/resources/callback"
-	"ubic-food/api/resources/food"
-	"ubic-food/api/resources/foods"
-	"ubic-food/api/resources/image"
-	"ubic-food/api/resources/transaction"
-	"ubic-food/api/resources/user"
-	"ubic-food/api/response"
-	"ubic-food/api/token"
+	"ubic-food/functions/api/resources/callback"
+	"ubic-food/functions/api/resources/food"
+	"ubic-food/functions/api/resources/foods"
+	"ubic-food/functions/api/resources/image"
+	"ubic-food/functions/api/resources/transaction"
+	"ubic-food/functions/api/resources/user"
+	"ubic-food/functions/api/response"
+	"ubic-food/functions/api/token"
 
 	"github.com/aws/aws-lambda-go/events"
 )
@@ -68,11 +67,11 @@ func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 		case "POST":
 			res = image.ImagePost(request, idTokenPayload)
 		}
-	case "/auth":
-		switch method {
-		case "GET":
-			res = auth.AuthGet(request)
-		}
+	/* case "/auth":
+	switch method {
+	case "GET":
+		res = auth.AuthGet(request)
+	} */
 	case "/callback":
 		switch method {
 		case "GET":

@@ -7,8 +7,8 @@ import (
 	"os"
 	"strings"
 	"time"
-	"ubic-food/api/cookie"
-	"ubic-food/api/hash"
+	"ubic-food/functions/api/cookie"
+	"ubic-food/functions/api/hash"
 )
 
 func VerifyIdToken(requestCookie []string, idToken string) (Payload, error) {
