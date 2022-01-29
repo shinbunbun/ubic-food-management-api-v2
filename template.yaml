@@ -154,6 +154,12 @@ Resources:
       Role: !GetAtt FunctionRole.Arn
       CodeUri: functions/transaction_post/
       Handler: functions/transaction_post
+  FoodsGetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt FunctionRole.Arn
+      CodeUri: functions/foods_get/
+      Handler: functions/foods_get
   AuthorizerFunction:
     Type: AWS::Serverless::Function
     Properties:

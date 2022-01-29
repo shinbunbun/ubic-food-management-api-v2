@@ -4,7 +4,6 @@ import (
 	"strings"
 	"ubic-food/functions/api/resources/callback"
 	"ubic-food/functions/api/resources/food"
-	"ubic-food/functions/api/resources/foods"
 	"ubic-food/functions/api/resources/image"
 	"ubic-food/functions/api/response"
 	"ubic-food/functions/api/token"
@@ -30,11 +29,6 @@ func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 	}
 
 	switch resource {
-	case "/foods":
-		switch method {
-		case "GET":
-			res = foods.FoodsGet(request, idTokenPayload)
-		}
 	case "/food":
 		switch method {
 		case "POST":
