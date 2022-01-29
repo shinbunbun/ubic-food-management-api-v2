@@ -24,7 +24,6 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return response.StatusCode400(err), nil
 	}
 
-	dynamodb.CreateTable()
 	var food types.Food
 	food.ID, err = dynamodb.GenerateID()
 	if err != nil {

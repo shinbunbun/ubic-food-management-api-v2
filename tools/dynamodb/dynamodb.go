@@ -12,7 +12,7 @@ import (
 
 var table dynamo.Table
 
-func CreateTable() {
+func init() {
 
 	var db *dynamo.DB
 	ses := session.Must(session.NewSession())

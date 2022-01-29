@@ -11,7 +11,6 @@ import (
 )
 
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	dynamodb.CreateTable()
 
 	items, err := dynamodb.GetByDataKind("food")
 	if err != nil {
