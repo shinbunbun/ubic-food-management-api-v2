@@ -1,319 +1,299 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
-  description: "UBIC食料管理システムAPI"
-  version: "1.0.0"
-  title: "UBIC food management API"
+  description: UBIC食料管理システムAPI
+  version: 1.0.0
+  title: UBIC food management API
 paths:
-
   /user:
     get:
-      summary: "ユーザー情報API"
-      description: "ユーザーの情報を返します"
+      summary: ユーザー情報API
+      description: ユーザーの情報を返します
       responses:
-        200:
-          description: "成功時のレスポンス"
+        '200':
+          description: 成功時のレスポンス
           schema:
-            type: "object"
+            type: object
             properties:
               userId:
-                type: "string"
+                type: string
               name:
-                type: "string"
+                type: string
               transactions:
-                type: "array"
+                type: array
                 items:
-                  $ref: "#/definitions/transaction"
+                  $ref: '#/definitions/transaction'
       security:
         - LambdaAuthorizer: []
       x-amazon-apigateway-integration:
         credentials:
-          Fn::Sub: ${ApiRole.Arn}
+          'Fn::Sub': '${ApiRole.Arn}'
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UserGetFunction.Arn}/invocations
+          'Fn::Sub': 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UserGetFunction.Arn}/invocations'
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
       x-amazon-apigateway-cors:
-          allowOrigins: ["*"]
-
-  # /transactions:
-  #   get:
-  #     summary: "全取引情報API"
-  #     description: "すべての取引の情報を返します"
-  #     responses:
-  #       200:
-  #         description: "成功時のレスポンス"
-  #         schema:
-  #           type: "array"
-  #           items:
-  #             $ref: "#definitions/transaction"
-
-  /transaction/{transactionId}:
-  #   get:
-  #     summary: "取引情報API"
-  #     description: "指定された取引の情報を返します"
-  #     parameters:
-  #     - name: "transactionId"
-  #       in: "path"
-  #       description: "取得したい取引のID"
-  #       required: true
-  #       type: "string"
-  #     responses:
-  #       200:
-  #         description: "成功時のレスポンス"
-  #         schema:
-  #           $ref: "#definitions/transaction"
+        allowOrigins:
+          - '*'
+  '/transaction/{transactionId}':
     delete:
-      summary: "取引削除API（返却）"
-      description: "指定の取引を削除するAPI\n主に返却の際に使用する"
+      summary: 取引削除API（返却）
+      description: |-
+        指定の取引を削除するAPI
+        主に返却の際に使用する
       parameters:
-      - name: "transactionId"
-        in: "path"
-        description: "削除したい取引のID"
-        required: true
-        type: "string"
+        - name: transactionId
+          in: path
+          description: 削除したい取引のID
+          required: true
+          type: string
+        - type: boolean
+          in: query
+          name: is_stock_increment
+          description: 在庫数を1追加するか否か
+          required: true
       responses:
-        204:
-          description: "成功時のレスポンス"
+        '204':
+          description: 成功時のレスポンス
       security:
         - LambdaAuthorizer: []
       x-amazon-apigateway-integration:
         credentials:
-          Fn::Sub: ${ApiRole.Arn}
+          'Fn::Sub': '${ApiRole.Arn}'
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${TransactionDeleteFunction.Arn}/invocations
+          'Fn::Sub': 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${TransactionDeleteFunction.Arn}/invocations'
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
       x-amazon-apigateway-cors:
-          allowOrigins: ["*"]
-
+        allowOrigins:
+          - '*'
   /transaction:
     post:
-      summary: "取引追加API（貸し出し）"
-      description: "新たな取引を追加するAPI\n主に貸し出し時に使用する"
+      summary: 取引追加API（貸し出し）
+      description: |-
+        新たな取引を追加するAPI
+        主に貸し出し時に使用する
       parameters:
-      - name: "body"
-        in: "body"
-        required: true
-        schema:
-          type: "object"
-          properties:
-            foodId:
-              type: "string"
-      responses:
-        200:
-          description: "成功時のレスポンス"
+        - name: body
+          in: body
+          required: true
           schema:
-            $ref: "#/definitions/transaction"
+            type: object
+            properties:
+              foodId:
+                type: string
+        - type: boolean
+          in: query
+          name: is_stock_decrement
+          required: true
+      responses:
+        '200':
+          description: 成功時のレスポンス
+          schema:
+            $ref: '#/definitions/transaction'
       security:
         - LambdaAuthorizer: []
       x-amazon-apigateway-integration:
         credentials:
-          Fn::Sub: ${ApiRole.Arn}
+          'Fn::Sub': '${ApiRole.Arn}'
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${TransactionPostFunction.Arn}/invocations
+          'Fn::Sub': 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${TransactionPostFunction.Arn}/invocations'
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
-      # x-amazon-apigateway-cors:
-      #     allowOrigins: ["*"]
-
   /foods:
     get:
-      summary: "食料情報取得API"
-      description: "すべての食料の情報を取得するAPI"
+      summary: 食料情報取得API
+      description: すべての食料の情報を取得するAPI
       responses:
-        200:
-          description: "成功時のレスポンス"
+        '200':
+          description: 成功時のレスポンス
           schema:
-            type: "array"
+            type: array
             items:
-              $ref: "#/definitions/food"
+              $ref: '#/definitions/food'
       security:
         - LambdaAuthorizer: []
       x-amazon-apigateway-integration:
         credentials:
-          Fn::Sub: ${ApiRole.Arn}
+          'Fn::Sub': '${ApiRole.Arn}'
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${FoodsGetFunction.Arn}/invocations
+          'Fn::Sub': 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${FoodsGetFunction.Arn}/invocations'
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
       x-amazon-apigateway-cors:
-          allowOrigins: ["*"]
-  
+        allowOrigins:
+          - '*'
   /food:
     post:
-      summary: "食料追加API"
-      description: "食料を追加する時に使うAPI"
+      summary: 食料追加API
+      description: 食料を追加する時に使うAPI
       parameters:
-      - name: "body"
-        in: "body"
-        required: true
-        schema:
-          type: "object"
-          properties:
-            name:
-              type: "string"
-            maker:
-              type: "string"
-            imageUrl:
-              type: "string"
-      responses:
-        200:
-          description: "成功時のレスポンス"
+        - name: body
+          in: body
+          required: true
           schema:
-            $ref: "#/definitions/food"
+            type: object
+            properties:
+              name:
+                type: string
+              maker:
+                type: string
+              imageUrl:
+                type: string
+      responses:
+        '200':
+          description: 成功時のレスポンス
+          schema:
+            $ref: '#/definitions/food'
       security:
         - LambdaAuthorizer: []
       x-amazon-apigateway-integration:
         credentials:
-          Fn::Sub: ${ApiRole.Arn}
+          'Fn::Sub': '${ApiRole.Arn}'
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${FoodPostFunction.Arn}/invocations
+          'Fn::Sub': 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${FoodPostFunction.Arn}/invocations'
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
       x-amazon-apigateway-cors:
-          allowOrigins: ["*"]
-
-  /food/{foodId}:
+        allowOrigins:
+          - '*'
+  '/food/{foodId}':
     patch:
-      summary: "食料情報更新API"
-      description: "在庫数変更に使用します"
+      summary: 食料情報更新API
+      description: 在庫数変更に使用します
       parameters:
-      - name: "foodId"
-        in: "path"
-        description: "更新したい食料のID"
-        required: true
-        type: "string"
-      - name: "body"
-        in: "body"
-        required: true
-        schema:
-          type: "object"
-          properties:
-            addNum:
-              type: "integer"
-      responses:
-        200:
-          description: "成功時のレスポンス"
+        - name: foodId
+          in: path
+          description: 更新したい食料のID
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
           schema:
-            $ref: "#/definitions/food"
+            type: object
+            properties:
+              addNum:
+                type: integer
+      responses:
+        '200':
+          description: 成功時のレスポンス
+          schema:
+            $ref: '#/definitions/food'
       security:
         - LambdaAuthorizer: []
       x-amazon-apigateway-integration:
         credentials:
-          Fn::Sub: ${ApiRole.Arn}
+          'Fn::Sub': '${ApiRole.Arn}'
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${FoodPatchFunction.Arn}/invocations
+          'Fn::Sub': 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${FoodPatchFunction.Arn}/invocations'
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
       x-amazon-apigateway-cors:
-          allowOrigins: ["*"]
-
-
+        allowOrigins:
+          - '*'
   /image:
     post:
-      summary: "画像アップロードAPI"
+      summary: 画像アップロードAPI
       consumes:
         - image/jpeg
       parameters:
-      - name: "image"
-        in: "body"
-        schema:
-          type: "string"
-          format: "base64"
-      responses:
-        200:
-          description: "成功時のレスポンス"
+        - name: image
+          in: body
           schema:
-            type: "object"
+            type: string
+            format: base64
+      responses:
+        '200':
+          description: 成功時のレスポンス
+          schema:
+            type: object
             properties:
               imageUrl:
-                type: "string"
+                type: string
       security:
         - LambdaAuthorizer: []
       x-amazon-apigateway-integration:
         credentials:
-          Fn::Sub: ${ApiRole.Arn}
+          'Fn::Sub': '${ApiRole.Arn}'
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ImagePostFunction.Arn}/invocations
+          'Fn::Sub': 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ImagePostFunction.Arn}/invocations'
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
       x-amazon-apigateway-cors:
-          allowOrigins: ["*"]
+        allowOrigins:
+          - '*'
   /auth:
     get:
-      summary: "LINEログイン"
+      summary: LINEログイン
       responses:
-        302:
-          description: "成功時のレスポンス"
+        '302':
+          description: 成功時のレスポンス
           headers:
             Location:
-              type: "string"
-              description: "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${channelId}&redirect_uri=${redirectUri}&state=${stateHash}&scope=openid%20email%20profile&nonce=${nonceHash}"
+              type: string
+              description: 'https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${channelId}&redirect_uri=${redirectUri}&state=${stateHash}&scope=openid%20email%20profile&nonce=${nonceHash}'
       x-amazon-apigateway-integration:
         credentials:
-          Fn::Sub: ${ApiRole.Arn}
+          'Fn::Sub': '${ApiRole.Arn}'
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AuthGetFunction.Arn}/invocations
+          'Fn::Sub': 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AuthGetFunction.Arn}/invocations'
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
   /callback:
     get:
-      summary: "LINEログインのコールバックエンドポイント"
-      description: "Authentication Requestのコールバックエンドポイント"
+      summary: LINEログインのコールバックエンドポイント
+      description: Authentication Requestのコールバックエンドポイント
       parameters:
-      - name: query
-        in: "query"
-        type: "array"
-        items:
-          type: "string"
-          enum:
-            - "code"
-            - "state"
+        - name: query
+          in: query
+          type: array
+          items:
+            type: string
+            enum:
+              - code
+              - state
       responses:
-        302:
-          description: "成功時のレスポンス"
+        '302':
+          description: 成功時のレスポンス
       x-amazon-apigateway-integration:
         credentials:
-          Fn::Sub: ${ApiRole.Arn}
+          'Fn::Sub': '${ApiRole.Arn}'
         uri:
-          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CallbackGetFunction.Arn}/invocations
+          'Fn::Sub': 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CallbackGetFunction.Arn}/invocations'
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
-
-
 definitions:
   food:
-    type: "object"
+    type: object
     properties:
       id:
-        type: "string"
+        type: string
       imageUrl:
-        type: "string"
+        type: string
       maker:
-        type: "string"
+        type: string
       name:
-        type: "string"
+        type: string
       stock:
-        type: "integer"
+        type: integer
   transaction:
-    type: "object"
+    type: object
     properties:
       id:
-        type: "string"
+        type: string
       date:
-        type: "integer"
+        type: integer
       food:
-        $ref: "#/definitions/food"
-
+        $ref: '#/definitions/food'
 securityDefinitions:
   LambdaAuthorizer:
     type: apiKey
@@ -322,7 +302,7 @@ securityDefinitions:
     x-amazon-apigateway-authtype: custom
     x-amazon-apigateway-authorizer:
       authorizerUri:
-        'Fn::Sub': >-
-          arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AuthorizerFunction.Arn}/invocations
+        'Fn::Sub': 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AuthorizerFunction.Arn}/invocations'
       authorizerResultTtlInSeconds: 0
       type: token
+    description: LINEログインのIdToken
