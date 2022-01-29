@@ -1,6 +1,7 @@
 package router
 
 import (
+	"strings"
 	"ubic-food/api/resources/auth"
 	"ubic-food/api/resources/callback"
 	"ubic-food/api/resources/food"
@@ -8,6 +9,7 @@ import (
 	"ubic-food/api/resources/image"
 	"ubic-food/api/resources/transaction"
 	"ubic-food/api/resources/user"
+	"ubic-food/api/response"
 	"ubic-food/api/token"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -16,20 +18,17 @@ import (
 func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	resource := request.Resource
 	method := request.HTTPMethod
-	response := events.APIGatewayProxyResponse{
-		StatusCode: 500,
-		Body:       "No response",
-	}
+	var res events.APIGatewayProxyResponse
 
 	var idTokenPayload token.Payload
 	var err error
 	if !(resource == "/auth" || resource == "/callback") {
-		idTokenPayload, err = authorizer(request)
+		authZHeader := request.Headers["Authorization"]
+		idToken := strings.Split(authZHeader, "Bearer ")[1]
+		idTokenArr := strings.Split(idToken, ".")
+		idTokenPayload, err = token.GetIdTokenPayload(idTokenArr)
 		if err != nil {
-			return events.APIGatewayProxyResponse{
-				StatusCode: 401,
-				Body:       err.Error(),
-			}, nil
+			return response.StatusCode500(err), err
 		}
 	}
 
@@ -37,48 +36,48 @@ func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 	case "/user":
 		switch method {
 		case "GET":
-			response = user.UserGet(request, idTokenPayload)
+			res = user.UserGet(request, idTokenPayload)
 		}
 	case "/transaction/{transactionId}":
 		switch method {
 		case "DELETE":
-			response = transaction.TransactionDelete(request, idTokenPayload)
+			res = transaction.TransactionDelete(request, idTokenPayload)
 		}
 	case "/transaction":
 		switch method {
 		case "POST":
-			response = transaction.TransactionPost(request, idTokenPayload)
+			res = transaction.TransactionPost(request, idTokenPayload)
 		}
 	case "/foods":
 		switch method {
 		case "GET":
-			response = foods.FoodsGet(request, idTokenPayload)
+			res = foods.FoodsGet(request, idTokenPayload)
 		}
 	case "/food":
 		switch method {
 		case "POST":
-			response = food.FoodPost(request, idTokenPayload)
+			res = food.FoodPost(request, idTokenPayload)
 		}
 	case "/food/{foodId}":
 		switch method {
 		case "PATCH":
-			response = food.FoodPatch(request, idTokenPayload)
+			res = food.FoodPatch(request, idTokenPayload)
 		}
 	case "/image":
 		switch method {
 		case "POST":
-			response = image.ImagePost(request, idTokenPayload)
+			res = image.ImagePost(request, idTokenPayload)
 		}
 	case "/auth":
 		switch method {
 		case "GET":
-			response = auth.AuthGet(request)
+			res = auth.AuthGet(request)
 		}
 	case "/callback":
 		switch method {
 		case "GET":
-			response = callback.CallbackGet(request)
+			res = callback.CallbackGet(request)
 		}
 	}
-	return response, nil
+	return res, nil
 }
