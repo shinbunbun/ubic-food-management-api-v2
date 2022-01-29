@@ -172,6 +172,12 @@ Resources:
       Role: !GetAtt FunctionRole.Arn
       CodeUri: functions/food_patch/
       Handler: functions/food_patch
+  ImagePostFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt FunctionRole.Arn
+      CodeUri: functions/image_post/
+      Handler: functions/image_post
 
   AuthorizerFunction:
     Type: AWS::Serverless::Function
