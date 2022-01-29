@@ -20,7 +20,7 @@ jobs:
         run: docker-compose up -d dynamodb-local localstack
         working-directory: local_resource
       - name: Copy aws config
-        run: cp ./.aws ~/
+        run: cp -r ./.aws ~/
         working-directory: local_resource 
       - name: Create table
         run: sh create_table.sh
