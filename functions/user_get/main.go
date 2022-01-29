@@ -1,4 +1,4 @@
-package user
+package main
 
 import (
 	"encoding/json"
@@ -9,11 +9,16 @@ import (
 	"ubic-food/functions/api/types"
 
 	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
 )
 
-func UserGet(request events.APIGatewayProxyRequest, idTokenPayload token.Payload) events.APIGatewayProxyResponse {
-
+func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	var userData types.User
+
+	idTokenPayload, err := token.GetIdTokenPayloadByAuthZHeader(request)
+	if err != nil {
+		return response.StatusCode500(err), nil
+	}
 
 	userData.UserID = idTokenPayload.Sub
 	userData.Name = idTokenPayload.Name
@@ -22,7 +27,7 @@ func UserGet(request events.APIGatewayProxyRequest, idTokenPayload token.Payload
 
 	transactionUserCols, err := dynamodb.GetByDataDataType(userData.UserID, "transaction-user")
 	if err != nil {
-		return response.StatusCode500(err)
+		return response.StatusCode500(err), nil
 	}
 
 	for _, v := range transactionUserCols {
@@ -31,22 +36,22 @@ func UserGet(request events.APIGatewayProxyRequest, idTokenPayload token.Payload
 
 		transactionDateCol, err := dynamodb.GetByIDDataType(transaction.ID, "transaction-date")
 		if err != nil {
-			return response.StatusCode500(err)
+			return response.StatusCode500(err), nil
 		}
 		transaction.Date, err = strconv.Atoi(transactionDateCol.Data)
 		if err != nil {
-			return response.StatusCode500(err)
+			return response.StatusCode500(err), nil
 		}
 
 		foodIDCol, err := dynamodb.GetByIDDataType(transaction.ID, "transaction-food")
 		if err != nil {
-			return response.StatusCode500(err)
+			return response.StatusCode500(err), nil
 		}
 		foodID := foodIDCol.Data
 
 		foodData, err := getFoodDataByID(foodID)
 		if err != nil {
-			return response.StatusCode500(err)
+			return response.StatusCode500(err), nil
 		}
 		transaction.Food = foodData
 
@@ -55,10 +60,10 @@ func UserGet(request events.APIGatewayProxyRequest, idTokenPayload token.Payload
 
 	resBody, err := json.Marshal(userData)
 	if err != nil {
-		return response.StatusCode500(err)
+		return response.StatusCode500(err), nil
 	}
 
-	return response.StatusCode200(string(resBody))
+	return response.StatusCode200(string(resBody)), nil
 }
 
 func getFoodDataByID(foodId string) (types.Food, error) {
@@ -90,4 +95,8 @@ func getFoodDataByID(foodId string) (types.Food, error) {
 	foodData.Stock = *(foodStockCol.IntData)
 
 	return foodData, nil
+}
+
+func main() {
+	lambda.Start(handler)
 }

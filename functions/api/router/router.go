@@ -7,7 +7,6 @@ import (
 	"ubic-food/functions/api/resources/foods"
 	"ubic-food/functions/api/resources/image"
 	"ubic-food/functions/api/resources/transaction"
-	"ubic-food/functions/api/resources/user"
 	"ubic-food/functions/api/response"
 	"ubic-food/functions/api/token"
 
@@ -32,11 +31,6 @@ func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 	}
 
 	switch resource {
-	case "/user":
-		switch method {
-		case "GET":
-			res = user.UserGet(request, idTokenPayload)
-		}
 	case "/transaction/{transactionId}":
 		switch method {
 		case "DELETE":
@@ -67,11 +61,6 @@ func Router(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 		case "POST":
 			res = image.ImagePost(request, idTokenPayload)
 		}
-	/* case "/auth":
-	switch method {
-	case "GET":
-		res = auth.AuthGet(request)
-	} */
 	case "/callback":
 		switch method {
 		case "GET":
