@@ -1,24 +1,19 @@
-package main
+package user
 
 import (
 	"encoding/json"
 	"strconv"
-	"ubic-food/tools/dynamodb"
-	"ubic-food/tools/response"
-	"ubic-food/tools/token"
-	"ubic-food/tools/types"
+	"ubic-food/api/dynamodb"
+	"ubic-food/api/response"
+	"ubic-food/api/token"
+	"ubic-food/api/types"
 
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
 )
 
-func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	var userData types.User
+func UserGet(request events.APIGatewayProxyRequest, idTokenPayload token.Payload) events.APIGatewayProxyResponse {
 
-	idTokenPayload, err := token.GetIdTokenPayloadByRequest(request)
-	if err != nil {
-		return response.StatusCode500(err), nil
-	}
+	var userData types.User
 
 	userData.UserID = idTokenPayload.Sub
 	userData.Name = idTokenPayload.Name
@@ -27,7 +22,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	transactionUserCols, err := dynamodb.GetByDataDataType(userData.UserID, "transaction-user")
 	if err != nil {
-		return response.StatusCode500(err), nil
+		return response.StatusCode500(err)
 	}
 
 	for _, v := range transactionUserCols {
@@ -36,22 +31,22 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 		transactionDateCol, err := dynamodb.GetByIDDataType(transaction.ID, "transaction-date")
 		if err != nil {
-			return response.StatusCode500(err), nil
+			return response.StatusCode500(err)
 		}
 		transaction.Date, err = strconv.Atoi(transactionDateCol.Data)
 		if err != nil {
-			return response.StatusCode500(err), nil
+			return response.StatusCode500(err)
 		}
 
 		foodIDCol, err := dynamodb.GetByIDDataType(transaction.ID, "transaction-food")
 		if err != nil {
-			return response.StatusCode500(err), nil
+			return response.StatusCode500(err)
 		}
 		foodID := foodIDCol.Data
 
 		foodData, err := getFoodDataByID(foodID)
 		if err != nil {
-			return response.StatusCode500(err), nil
+			return response.StatusCode500(err)
 		}
 		transaction.Food = foodData
 
@@ -60,10 +55,10 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	resBody, err := json.Marshal(userData)
 	if err != nil {
-		return response.StatusCode500(err), nil
+		return response.StatusCode500(err)
 	}
 
-	return response.StatusCode200(string(resBody)), nil
+	return response.StatusCode200(string(resBody))
 }
 
 func getFoodDataByID(foodId string) (types.Food, error) {
@@ -95,8 +90,4 @@ func getFoodDataByID(foodId string) (types.Food, error) {
 	foodData.Stock = *(foodStockCol.IntData)
 
 	return foodData, nil
-}
-
-func main() {
-	lambda.Start(handler)
 }

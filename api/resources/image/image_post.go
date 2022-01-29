@@ -1,32 +1,32 @@
-package main
+package image
 
 import (
 	"bytes"
 	"encoding/base64"
 	"encoding/json"
-	"ubic-food/tools/dynamodb"
-	"ubic-food/tools/response"
+	"ubic-food/api/dynamodb"
+	"ubic-food/api/response"
+	"ubic-food/api/token"
 
-	"ubic-food/tools/s3"
+	"ubic-food/api/s3"
 
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
 )
 
 type imagePostResponse struct {
 	ImageUrl string `json:"imageUrl"`
 }
 
-func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func ImagePost(request events.APIGatewayProxyRequest, idTokenPayload token.Payload) events.APIGatewayProxyResponse {
 	reqBody := request.Body
 	dec, err := base64.StdEncoding.DecodeString(reqBody)
 	if err != nil {
-		return response.StatusCode500(err), nil
+		return response.StatusCode500(err)
 	}
 
 	fileName, err := dynamodb.GenerateID()
 	if err != nil {
-		return response.StatusCode500(err), nil
+		return response.StatusCode500(err)
 	}
 	fileName += ".jpeg"
 
@@ -35,19 +35,16 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	location, err := s3.Upload(&buf, fileName, request.Headers["Content-Type"])
 	if err != nil {
-		return response.StatusCode500(err), nil
+		return response.StatusCode500(err)
 	}
 
 	res, err := json.Marshal(imagePostResponse{
 		ImageUrl: location,
 	})
 	if err != nil {
-		return response.StatusCode500(err), nil
+		return response.StatusCode500(err)
 	}
 
-	return response.StatusCode200(string(res)), nil
-}
+	return response.StatusCode200(string(res))
 
-func main() {
-	lambda.Start(handler)
 }

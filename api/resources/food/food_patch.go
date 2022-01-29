@@ -1,25 +1,25 @@
-package main
+package food
 
 import (
 	"encoding/json"
-	"ubic-food/tools/dynamodb"
-	"ubic-food/tools/response"
-	"ubic-food/tools/types"
+	"ubic-food/api/dynamodb"
+	"ubic-food/api/response"
+	"ubic-food/api/token"
+	"ubic-food/api/types"
 
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
 )
 
 type patchRequestBody struct {
 	AddNum int `json:"addNum"`
 }
 
-func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func FoodPatch(request events.APIGatewayProxyRequest, idTokenPayload token.Payload) events.APIGatewayProxyResponse {
 	reqBodyJson := request.Body
 	var reqBody patchRequestBody
 	err := json.Unmarshal([]byte(reqBodyJson), &reqBody)
 	if err != nil {
-		return response.StatusCode400(err), nil
+		return response.StatusCode400(err)
 	}
 	addNum := reqBody.AddNum
 
@@ -28,24 +28,20 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	dynamodb.CreateTable()
 	err = dynamodb.AddIntData(addNum, foodId, "food-stock")
 	if err != nil {
-		return response.StatusCode500(err), nil
+		return response.StatusCode500(err)
 	}
 
 	var food types.Food
 	food.ID = foodId
 	err = food.Get()
 	if err != nil {
-		return response.StatusCode500(err), nil
+		return response.StatusCode500(err)
 	}
 
 	resBody, err := json.Marshal(food)
 	if err != nil {
-		return response.StatusCode500(err), nil
+		return response.StatusCode500(err)
 	}
 
-	return response.StatusCode200(string(resBody)), nil
-}
-
-func main() {
-	lambda.Start(handler)
+	return response.StatusCode200(string(resBody))
 }
