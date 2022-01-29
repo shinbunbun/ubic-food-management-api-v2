@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"strconv"
 	"time"
 
 	"ubic-food/tools/dynamodb"
@@ -20,6 +21,12 @@ type requestBody struct {
 }
 
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+
+	isStockDecrement, err := strconv.ParseBool(request.QueryStringParameters["is_stock_decrement"])
+	if err != nil {
+		fmt.Println(err.Error())
+		return response.StatusCode400(errors.New("is_stock_decrement must be a boolean")), nil
+	}
 
 	idTokenPayload, err := token.GetIdTokenPayloadByRequest(request)
 	if err != nil {
@@ -50,17 +57,21 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		fmt.Println("Error getting food:", err.Error())
 		return response.StatusCode500(err), nil
 	}
-	transaction.Food = food
 
-	if food.Stock < 1 {
-		return response.StatusCode400(errors.New("food is out of stock")), nil
+	if isStockDecrement {
+		if food.Stock < 1 {
+			fmt.Println("Error: food stock is out of stock")
+			return response.StatusCode400(errors.New("food is out of stock")), nil
+		}
+		err = dynamodb.AddIntData(-1, food.ID, "food-stock")
+		if err != nil {
+			fmt.Println("Error adding food stock:", err.Error())
+			return response.StatusCode500(err), nil
+		}
+		food.Stock -= 1
 	}
 
-	/* err = dynamodb.AddIntData(-1, food.ID, "food-stock")
-	if err != nil {
-		fmt.Println("Error adding food stock:", err.Error())
-		return response.StatusCode500(err)
-	} */
+	transaction.Food = food
 
 	err = transaction.Put(idTokenPayload.Sub)
 	if err != nil {
