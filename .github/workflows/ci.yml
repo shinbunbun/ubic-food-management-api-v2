@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: test
-        run: docker-compose up -d dynamodb-local localstack && docker-compose go-test
+        run: docker-compose up -d dynamodb-local localstack && docker-compose up go-test
         working-directory: local_resource
 
   build-check:
