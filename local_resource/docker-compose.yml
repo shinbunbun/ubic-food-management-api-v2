@@ -37,6 +37,24 @@ services:
     networks:
       - dynamodb-local-network
 
+  go-test:
+    container_name: go-test
+    environment:
+      - GOPATH=
+      - STAGE=local
+      - CHANNEL_ID=1234
+      - CHANNEL_SECRET=1234
+      - AWS_SAM_LOCAL=true
+      - S3_BUCKET_NAME=s3-bucket
+      - REDIRECT_URI=http://localhost:3000/callback
+    image: golang:1.16
+    volumes:
+      - ../:/go
+    command: go test -v ./...
+    networks:
+      - dynamodb-local-network
+
+
 volumes:
   dynamodb-local-data:
 
