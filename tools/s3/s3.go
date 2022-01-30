@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
@@ -24,6 +25,7 @@ func init() {
 			Region:           aws.String("ap-north-east-1"),
 			Endpoint:         aws.String("http://localstack:4566"),
 			DisableSSL:       aws.Bool(false),
+			Credentials:      credentials.NewStaticCredentials("dummy", "dummy", "dummy"),
 		})
 	} else {
 		s3vc = s3.New(ses)
