@@ -2,6 +2,7 @@ package main
 
 import (
 	"testing"
+	"ubic-food/tools/dynamodb"
 	"ubic-food/tools/types"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -24,6 +25,11 @@ func Test_handler(t *testing.T) {
 	}
 	if err != nil {
 		t.Fatal("Expected no error, got ", err.Error())
+	}
+
+	err = dynamodb.AddIntData(-1, "food-1", "food-stock")
+	if err != nil {
+		t.Fatal("dynamodb.AddIntData error", err.Error())
 	}
 
 	var transaction types.Transaction
