@@ -44,6 +44,8 @@ func Test_handler(t *testing.T) {
 	}
 	transaction.Food.Stock += 1
 
+	fmt.Printf("transaction: %+#v\n", transaction)
+
 	ok := (transaction.Food.ID == "food-1") && (transaction.Food.ImageUrl == "https://shinbunbun.info/images/photos/24.jpeg") && (transaction.Food.Maker == "dummy-maker-1") && (transaction.Food.Name == "dummy-name-1") && (transaction.Food.Stock == 3)
 	if !ok {
 		t.Fatal("No expected food data")
