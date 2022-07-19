@@ -69,9 +69,6 @@ func (k *KeyPair) Verify(tokenString string) (jwt.Claims, error) {
 		if publicKeyBlock == nil {
 			return nil, errors.New("Public key block is null. rest: " + string(rest))
 		}
-		if publicKeyBlock.Type != "PUBLIC KEY" {
-			return nil, errors.New("Invalid public key type: " + publicKeyBlock.Type)
-		}
 
 		return x509.ParsePKCS1PublicKey(publicKeyBlock.Bytes)
 	})
