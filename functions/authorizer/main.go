@@ -8,7 +8,7 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
-func handler(ctx context.Context, request events.APIGatewayCustomAuthorizerRequest) (events.APIGatewayCustomAuthorizerResponse, error) {
+func handler(_ context.Context, request events.APIGatewayCustomAuthorizerRequest) (events.APIGatewayCustomAuthorizerResponse, error) {
 	authZHeader := request.AuthorizationToken
 	if authZHeader == "" {
 		return events.APIGatewayCustomAuthorizerResponse{}, errors.New("Authorization header is empty")
