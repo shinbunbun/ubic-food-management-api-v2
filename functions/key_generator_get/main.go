@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"ubic-food/tools/keypair"
 	"ubic-food/tools/response"
 	"ubic-food/tools/token"
@@ -15,6 +16,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	idTokenPayload, err := token.GetIdTokenPayloadByRequest(request)
 	if err != nil {
+		fmt.Println("Error getting id token payload: ", err.Error())
 		return response.StatusCode500(err), nil
 	}
 	userId := idTokenPayload.Sub
@@ -25,16 +27,19 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	var keyPair keypair.KeyPair
 	err = keyPair.Generate()
 	if err != nil {
+		fmt.Println("Error generating key pair: ", err.Error())
 		return response.StatusCode500(err), nil
 	}
 
 	err = keyPair.SaveToDb(clientId)
 	if err != nil {
+		fmt.Println("Error saving key pair to db: ", err.Error())
 		return response.StatusCode500(err), nil
 	}
 
 	resBody, err := json.Marshal(keyPair)
 	if err != nil {
+		fmt.Println("Error marshalling key pair: ", err.Error())
 		return response.StatusCode500(err), nil
 	}
 
