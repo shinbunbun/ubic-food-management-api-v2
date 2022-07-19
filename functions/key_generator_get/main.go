@@ -11,7 +11,7 @@ import (
 )
 
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	clientId := request.PathParameters["transactionId"]
+	clientId := request.PathParameters["clientId"]
 
 	idTokenPayload, err := token.GetIdTokenPayloadByRequest(request)
 	if err != nil {
