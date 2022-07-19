@@ -23,7 +23,7 @@ func Test_verify(t *testing.T) {
 			},
 			want: token.Payload{
 				Iss:   "https://access.line.me",
-				Sub:   "U6b53f4ad79a23f5427119cb44f08dbd7",
+				Sub:   "user-1",
 				Aud:   "1234",
 				Exp:   4102455600,
 				Iat:   1643453753,
