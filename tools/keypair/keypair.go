@@ -7,6 +7,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"errors"
+	"fmt"
 	"ubic-food/tools/dynamodb"
 
 	"github.com/dgrijalva/jwt-go"
@@ -49,6 +50,8 @@ func (k *KeyPair) SaveToDb(clientId string) error {
 		Data:     k.PublicKey,
 		DataKind: "public-key",
 	}
+
+	fmt.Printf("Saving public key to db: %+v\n", dynamoItem)
 
 	return dynamodb.Put(dynamoItem)
 }

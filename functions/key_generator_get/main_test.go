@@ -39,4 +39,9 @@ func Test_handler(t *testing.T) {
 		t.Fatal("Unexpected ID, got ", keyData.ID)
 	}
 
+	err = dynamodb.DeleteByID("client-1", "public-key")
+	if err != nil {
+		t.Fatal("Expected no error, got ", err.Error())
+	}
+
 }
