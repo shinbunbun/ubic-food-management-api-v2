@@ -17,7 +17,7 @@ type KeyPair struct {
 	PrivateKey string
 }
 
-func (k KeyPair) Generate() error {
+func (k *KeyPair) Generate() error {
 	reader := rand.Reader
 	bitSize := 2048
 
@@ -42,7 +42,7 @@ func (k KeyPair) Generate() error {
 	return err
 }
 
-func (k KeyPair) SaveToDb(clientId string) error {
+func (k *KeyPair) SaveToDb(clientId string) error {
 	dynamoItem := dynamodb.DynamoItem{
 		ID:       clientId,
 		DataType: "client-info",
@@ -53,7 +53,7 @@ func (k KeyPair) SaveToDb(clientId string) error {
 	return dynamodb.Put(dynamoItem)
 }
 
-func (k KeyPair) Verify(tokenString string) (jwt.Claims, error) {
+func (k *KeyPair) Verify(tokenString string) (jwt.Claims, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		issuer, ok := token.Header["iss"].(string)
 		if !ok {
