@@ -25,6 +25,8 @@ func verify(authZHeader string) (token.Payload, error) {
 		}
 
 		return payload, nil
+	} else {
+		println(err.Error())
 	}
 
 	idTokenArr := strings.Split(idToken, ".")
