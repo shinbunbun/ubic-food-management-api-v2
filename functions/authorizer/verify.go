@@ -13,7 +13,6 @@ func verify(authZHeader string) (token.Payload, error) {
 	keyPair := keypair.KeyPair{}
 	claims, err := keyPair.Verify(idToken)
 	if err == nil {
-		println("Verified token:", claims)
 		payload, ok := claims.(token.Payload)
 		if !ok {
 			return token.Payload{}, errors.New("Invalid claims")

@@ -7,6 +7,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"errors"
+	"fmt"
 	"ubic-food/tools/dynamodb"
 
 	"github.com/dgrijalva/jwt-go"
@@ -55,6 +56,7 @@ func (k *KeyPair) SaveToDb(clientId string) error {
 
 func (k *KeyPair) Verify(tokenString string) (jwt.Claims, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		fmt.Printf("%+v\n", token)
 		issuer, ok := token.Header["iss"].(string)
 		if !ok {
 			return nil, errors.New("Invalid issuer")
