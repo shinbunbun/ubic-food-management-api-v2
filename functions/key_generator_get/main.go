@@ -12,7 +12,7 @@ import (
 )
 
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	clientId := request.PathParameters["clientId"]
+	clientId := request.QueryStringParameters["clientId"]
 
 	idTokenPayload, err := token.GetIdTokenPayloadByRequest(request)
 	if err != nil {
