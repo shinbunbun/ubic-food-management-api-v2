@@ -55,9 +55,13 @@ func (k *KeyPair) SaveToDb(clientId string) error {
 
 func (k *KeyPair) Verify(tokenString string) (jwt.Claims, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		issuer, ok := token.Header["id"].(string)
+		claims, ok := token.Claims.(jwt.MapClaims)
 		if !ok {
-			return nil, errors.New("Invalid id")
+			return nil, errors.New("Invalid claims")
+		}
+		issuer, ok := claims["iss"].(string)
+		if !ok {
+			return nil, errors.New("Invalid iss")
 		}
 
 		keyData, err := dynamodb.GetByIDDataType(issuer, "public-key")

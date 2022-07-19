@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 	"ubic-food/tools/keypair"
 	"ubic-food/tools/token"
@@ -14,7 +13,6 @@ func verify(authZHeader string) (token.Payload, error) {
 	keyPair := keypair.KeyPair{}
 	claims, err := keyPair.Verify(idToken)
 	if err == nil {
-		fmt.Printf("%+v\n", claims)
 		payload, ok := claims.(token.Payload)
 		if !ok {
 			return token.Payload{}, errors.New("Invalid claims")

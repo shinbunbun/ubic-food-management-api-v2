@@ -7,10 +7,10 @@ type Payload struct {
 	Exp int    `json:"exp"`
 	Iat int    `json:"iat"`
 	// AuthTime int      `json:"auth_time"`
-	Nonce   string   `json:"nonce,omitempty"`
+	Nonce   string   `json:"nonce"`
 	Amr     []string `json:"amr,omitempty"`
-	Name    string   `json:"name,omitempty"`
-	Picture string   `json:"picture,omitempty"`
+	Name    string   `json:"name"`
+	Picture string   `json:"picture"`
 	Email   string   `json:"email,omitempty"`
 }
 
