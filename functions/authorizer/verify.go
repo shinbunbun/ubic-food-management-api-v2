@@ -1,7 +1,7 @@
 package main
 
 import (
-	"errors"
+	"encoding/json"
 	"strings"
 	"ubic-food/tools/keypair"
 	"ubic-food/tools/token"
@@ -13,10 +13,17 @@ func verify(authZHeader string) (token.Payload, error) {
 	keyPair := keypair.KeyPair{}
 	claims, err := keyPair.Verify(idToken)
 	if err == nil {
-		payload, ok := claims.(token.Payload)
-		if !ok {
-			return token.Payload{}, errors.New("Invalid claims")
+		claimJson, err := json.Marshal(claims)
+		if err != nil {
+			return token.Payload{}, err
 		}
+
+		var payload token.Payload
+		err = json.Unmarshal(claimJson, &payload)
+		if err != nil {
+			return token.Payload{}, err
+		}
+
 		return payload, nil
 	}
 

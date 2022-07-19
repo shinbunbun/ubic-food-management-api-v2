@@ -7,6 +7,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"errors"
+	"time"
 	"ubic-food/tools/dynamodb"
 
 	"github.com/dgrijalva/jwt-go"
@@ -53,7 +54,7 @@ func (k *KeyPair) SaveToDb(clientId string) error {
 	return dynamodb.Put(dynamoItem)
 }
 
-func (k *KeyPair) Verify(tokenString string) (jwt.Claims, error) {
+func (k *KeyPair) Verify(tokenString string) (jwt.MapClaims, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		claims, ok := token.Claims.(jwt.MapClaims)
 		if !ok {
@@ -85,5 +86,14 @@ func (k *KeyPair) Verify(tokenString string) (jwt.Claims, error) {
 		return nil, errors.New("Invalid token")
 	}
 
-	return token.Claims, nil
+	mapClaims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return nil, errors.New("Failed to parse claims")
+	}
+
+	if mapClaims.VerifyExpiresAt(time.Now().Unix(), true) {
+		return jwt.MapClaims{}, errors.New("Token expired")
+	}
+
+	return mapClaims, nil
 }
