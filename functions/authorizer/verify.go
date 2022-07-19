@@ -25,9 +25,9 @@ func verify(authZHeader string) (token.Payload, error) {
 		}
 
 		return payload, nil
-	} else {
-		println(err.Error())
-	}
+	} /*  else {
+		println()
+	} */
 
 	idTokenArr := strings.Split(idToken, ".")
 	err = token.VerifySignature(idTokenArr)

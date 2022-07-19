@@ -91,7 +91,7 @@ func (k *KeyPair) Verify(tokenString string) (jwt.MapClaims, error) {
 		return nil, errors.New("Failed to parse claims")
 	}
 
-	if mapClaims.VerifyExpiresAt(time.Now().Unix(), true) {
+	if mapClaims.VerifyExpiresAt(time.Now().Unix(), false) {
 		return jwt.MapClaims{}, errors.New("Token expired")
 	}
 
