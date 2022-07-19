@@ -1,15 +1,6 @@
 package main
 
-import (
-	"encoding/json"
-	"fmt"
-	"testing"
-	"ubic-food/tools/types"
-
-	"github.com/aws/aws-lambda-go/events"
-)
-
-func Test_handler(t *testing.T) {
+/* func Test_handler(t *testing.T) {
 	res, err := handler(events.APIGatewayProxyRequest{})
 	if res.StatusCode != 200 {
 		t.Fatal("Expected status code 200, got ", res.StatusCode, res.Body)
@@ -38,4 +29,4 @@ func Test_handler(t *testing.T) {
 	if !flag {
 		t.Fatal("Expected food data is not found")
 	}
-}
+} */

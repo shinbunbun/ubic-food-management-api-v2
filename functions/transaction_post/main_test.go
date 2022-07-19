@@ -1,16 +1,6 @@
 package main
 
-import (
-	"encoding/json"
-	"fmt"
-	"testing"
-	"ubic-food/tools/dynamodb"
-	"ubic-food/tools/types"
-
-	"github.com/aws/aws-lambda-go/events"
-)
-
-func Test_handler(t *testing.T) {
+/* func Test_handler(t *testing.T) {
 
 	request := events.APIGatewayProxyRequest{
 		Body: `{"foodId": "food-1"}`,
@@ -50,4 +40,4 @@ func Test_handler(t *testing.T) {
 	if !ok {
 		t.Fatal("No expected food data")
 	}
-}
+} */
