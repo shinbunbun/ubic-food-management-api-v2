@@ -13,3 +13,7 @@ type Payload struct {
 	Picture string   `json:"picture"`
 	Email   string   `json:"email,omitempty"`
 }
+
+func (p Payload) Valid() error {
+	return nil
+}
