@@ -65,9 +65,15 @@ func (k *KeyPair) Verify(tokenString string) (jwt.Claims, error) {
 			return nil, err
 		}
 
-		println(keyData.Data)
+		publicKeyBlock, _ := pem.Decode([]byte(keyData.Data))
+		if publicKeyBlock == nil {
+			return nil, errors.New("Invalid public key")
+		}
+		if publicKeyBlock.Type != "PUBLIC KEY" {
+			return nil, errors.New("Invalid public key")
+		}
 
-		return []byte(keyData.Data), nil
+		return x509.ParsePKCS1PublicKey(publicKeyBlock.Bytes)
 	})
 
 	if err != nil {
