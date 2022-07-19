@@ -25,9 +25,9 @@ jobs:
       - name: Create table
         run: sh create_table.sh
         working-directory: local_resource
-      # - name: Create bucket
-      #   run: sh create_bucket.sh
-      #   working-directory: local_resource
+      - name: Create bucket
+        run: sh create_bucket.sh
+        working-directory: local_resource
       - name: Add dummy data
         run: sh add_dummy_data.sh
         working-directory: local_resource
