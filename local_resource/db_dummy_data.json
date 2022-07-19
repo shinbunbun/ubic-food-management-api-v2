@@ -125,6 +125,24 @@
           }
         }
       }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "ID": {
+            "S": "client-1"
+          },
+          "DataType": {
+            "S": "public-key"
+          },
+          "Data": {
+            "S": "-----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEA27PJ5szoNNWc1H9p+CtA5igoDLXUYMxclM8u7nhQzIv0bbyyUQkj\nx/0qQKo8/742nGU/JsbUG/UZk/lxsY02DaAxmNEiNYK19gTt/iEYaFXm8w7OKMpQ\n1p/nv8ZAqVrOsXYDNtr083/QlfMxYc0dM4o+Kk/bYUcmEs1CW7AqgVTwtwu2j/+7\nI8N5AMtdP68xrdgfwxSyd7QunqbB6GR3jPNMuBkXRfVzKFj8CfDOpyplq7etKF0/\n1GR21889gyzybMVSbWH326U7DWD9cx4+XocOj+BNtqVl7TmeW4o1St2Ow9c128Dp\nghbbw2miHEX/NSjUi0u0ckr0zMD+BVcKgwIDAQAB\n-----END RSA PUBLIC KEY-----"
+          },
+          "DataKind": {
+            "S": "client-info"
+          }
+        }
+      }
     }
   ]
 }
