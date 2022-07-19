@@ -45,9 +45,9 @@ func (k *KeyPair) Generate() error {
 func (k *KeyPair) SaveToDb(clientId string) error {
 	dynamoItem := dynamodb.DynamoItem{
 		ID:       clientId,
-		DataType: "client-info",
+		DataType: "public-key",
 		Data:     k.PublicKey,
-		DataKind: "public-key",
+		DataKind: "client-info",
 	}
 
 	return dynamodb.Put(dynamoItem)
