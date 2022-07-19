@@ -65,6 +65,8 @@ func (k *KeyPair) Verify(tokenString string) (jwt.Claims, error) {
 			return nil, err
 		}
 
+		println(keyData.Data)
+
 		return []byte(keyData.Data), nil
 	})
 
