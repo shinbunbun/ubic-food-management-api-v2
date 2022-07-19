@@ -15,7 +15,7 @@ func Test_handler(t *testing.T) {
 			"clientId": "client-1",
 		},
 		Headers: map[string]string{
-			"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FjY2Vzcy5saW5lLm1lIiwic3ViIjoiVTZiNTNmNGFkNzlhMjNmNTQyNzExOWNiNDRmMDhkYmQ3IiwiYXVkIjoiMTIzNCIsImV4cCI6NDEwMjQ1NTYwMCwiaWF0IjoxNjQzNDUzNzUzLCJub25jZSI6ImR1bW15LW5vbmNlIiwiYW1yIjpbImxpbmVzc28iXSwibmFtZSI6InVzZXItbmFtZSIsInBpY3R1cmUiOiJodHRwczovL2V4YW1wbGUuY29tIn0.VRNCuRKWgmAazYopeDDbL1PINOt58cXy2HoyvHfXmfo",
+			"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FjY2Vzcy5saW5lLm1lIiwic3ViIjoiVTZiNTNmNGFkNzlhMjNmNTQyNzExOWNiNDRmMDhkYmQ3IiwiYXVkIjoiMTIzNCIsImV4cCI6NDEwMjQ1NTYwMCwiaWF0IjoxNjQzNDUzNzUzLCJub25jZSI6ImR1bW15LW5vbmNlIiwiYW1yIjpbImxpbmVzc28iXSwibmFtZSI6InVzZXItbmFtZSIsInBpY3R1cmUiOiJodHRwczovL2V4YW1wbGUuY29tIn0.nwb4fx0qi1YTNY1MuLQnmzAuCsg6gCuZkMyfr9ialAk",
 		},
 	})
 	if res.StatusCode != 200 {
