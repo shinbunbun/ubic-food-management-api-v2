@@ -25,6 +25,13 @@ func StatusCode400(err error) events.APIGatewayProxyResponse {
 	}
 }
 
+func StatusCode401(err error) events.APIGatewayProxyResponse {
+	return events.APIGatewayProxyResponse{
+		StatusCode: 401,
+		Body:       "Unauthorized: " + err.Error(),
+	}
+}
+
 func StatusCode200(body string) events.APIGatewayProxyResponse {
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,

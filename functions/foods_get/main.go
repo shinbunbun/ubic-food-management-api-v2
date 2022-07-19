@@ -10,7 +10,7 @@ import (
 	"ubic-food/tools/types"
 )
 
-func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func handler(_ events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
 	items, err := dynamodb.GetByDataKind("food")
 	if err != nil {

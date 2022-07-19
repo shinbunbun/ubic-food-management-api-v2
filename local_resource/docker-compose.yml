@@ -25,7 +25,7 @@ services:
 
   localstack:
     container_name: localstack
-    image: localstack/localstack
+    image: localstack/localstack:0.13
     environment:
       - SERVICES=s3
       - DEFAULT_REGION=ap-northeast-1
