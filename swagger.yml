@@ -1,4 +1,6 @@
 swagger: '2.0'
+x-stoplight:
+  id: 0c23gty04mpex
 info:
   description: UBIC食料管理システムAPI
   version: 1.0.0
@@ -223,6 +225,30 @@ paths:
           'Fn::Sub': '${ApiRole.Arn}'
         uri:
           'Fn::Sub': 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ImagePostFunction.Arn}/invocations'
+        passthroughBehavior: when_no_templates
+        httpMethod: POST
+        type: aws_proxy
+      x-amazon-apigateway-cors:
+        allowOrigins:
+          - '*'
+  /key_generator:
+    get:
+      summary: APIキー作成API
+      description: クライアントアプリケーションのAPIキーを作成するAPI
+      responses:
+        '200':
+          description: 成功時のレスポンス
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/food'
+      security:
+        - LambdaAuthorizer: []
+      x-amazon-apigateway-integration:
+        credentials:
+          'Fn::Sub': '${ApiRole.Arn}'
+        uri:
+          'Fn::Sub': 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${FoodsGetFunction.Arn}/invocations'
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
