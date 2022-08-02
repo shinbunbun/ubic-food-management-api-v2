@@ -37,18 +37,6 @@ paths:
       x-amazon-apigateway-cors:
         allowOrigins:
           - '*'
-      x-amazon-apigateway-policy:
-          Version: "2012-10-17"
-          Statement:
-          - Effect: Allow
-            Principal: "*"
-            Action: execute-api:Invoke
-            Resource:
-              - "execute-api:/*"
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                  - "163.143.50.0/23"
   '/transaction/{transactionId}':
     delete:
       summary: 取引削除API（返却）
@@ -82,18 +70,6 @@ paths:
       x-amazon-apigateway-cors:
         allowOrigins:
           - '*'
-      x-amazon-apigateway-policy:
-          Version: "2012-10-17"
-          Statement:
-          - Effect: Allow
-            Principal: "*"
-            Action: execute-api:Invoke
-            Resource:
-              - "execute-api:/*"
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                  - "163.143.50.0/23"
   /transaction:
     post:
       summary: 取引追加API（貸し出し）
@@ -128,18 +104,6 @@ paths:
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
-      x-amazon-apigateway-policy:
-          Version: "2012-10-17"
-          Statement:
-          - Effect: Allow
-            Principal: "*"
-            Action: execute-api:Invoke
-            Resource:
-              - "execute-api:/*"
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                  - "163.143.50.0/23"
   /foods:
     get:
       summary: 食料情報取得API
@@ -164,18 +128,6 @@ paths:
       x-amazon-apigateway-cors:
         allowOrigins:
           - '*'
-      x-amazon-apigateway-policy:
-          Version: "2012-10-17"
-          Statement:
-          - Effect: Allow
-            Principal: "*"
-            Action: execute-api:Invoke
-            Resource:
-              - "execute-api:/*"
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                  - "163.143.50.0/23"
   /food:
     post:
       summary: 食料追加API
@@ -211,18 +163,6 @@ paths:
       x-amazon-apigateway-cors:
         allowOrigins:
           - '*'
-      x-amazon-apigateway-policy:
-          Version: "2012-10-17"
-          Statement:
-          - Effect: Allow
-            Principal: "*"
-            Action: execute-api:Invoke
-            Resource:
-              - "execute-api:/*"
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                  - "163.143.50.0/23"
   '/food/{foodId}':
     patch:
       summary: 食料情報更新API
@@ -259,18 +199,6 @@ paths:
       x-amazon-apigateway-cors:
         allowOrigins:
           - '*'
-      x-amazon-apigateway-policy:
-          Version: "2012-10-17"
-          Statement:
-          - Effect: Allow
-            Principal: "*"
-            Action: execute-api:Invoke
-            Resource:
-              - "execute-api:/*"
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                  - "163.143.50.0/23"
   /image:
     post:
       summary: 画像アップロードAPI
@@ -303,18 +231,6 @@ paths:
       x-amazon-apigateway-cors:
         allowOrigins:
           - '*'
-      x-amazon-apigateway-policy:
-          Version: "2012-10-17"
-          Statement:
-          - Effect: Allow
-            Principal: "*"
-            Action: execute-api:Invoke
-            Resource:
-              - "execute-api:/*"
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                  - "163.143.50.0/23"
   /key_generator:
     get:
       summary: APIキー作成API
@@ -339,18 +255,6 @@ paths:
       x-amazon-apigateway-cors:
         allowOrigins:
           - '*'
-      x-amazon-apigateway-policy:
-          Version: "2012-10-17"
-          Statement:
-          - Effect: Allow
-            Principal: "*"
-            Action: execute-api:Invoke
-            Resource:
-              - "execute-api:/*"
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                  - "163.143.50.0/23"
   /auth:
     get:
       summary: LINEログイン
@@ -369,18 +273,6 @@ paths:
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
-      x-amazon-apigateway-policy:
-          Version: "2012-10-17"
-          Statement:
-          - Effect: Allow
-            Principal: "*"
-            Action: execute-api:Invoke
-            Resource:
-              - "execute-api:/*"
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                  - "163.143.50.0/23"
   /callback:
     get:
       summary: LINEログインのコールバックエンドポイント
@@ -405,18 +297,6 @@ paths:
         passthroughBehavior: when_no_templates
         httpMethod: POST
         type: aws_proxy
-      x-amazon-apigateway-policy:
-          Version: "2012-10-17"
-          Statement:
-          - Effect: Allow
-            Principal: "*"
-            Action: execute-api:Invoke
-            Resource:
-              - "execute-api:/*"
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                  - "163.143.50.0/23"
 definitions:
   food:
     type: object
